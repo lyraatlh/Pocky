@@ -22,6 +22,7 @@ export function TransactionForm({ onSubmit, initialData, onCancel }: Transaction
   const [description, setDescription] = useState("")
   const [amount, setAmount] = useState("")
   const [date, setDate] = useState(new Date().toISOString().split("T")[0])
+  const [category, setCategory] = useState("")
 
   useEffect(() => {
     if (initialData) {
@@ -29,6 +30,7 @@ export function TransactionForm({ onSubmit, initialData, onCancel }: Transaction
       setDescription(initialData.description)
       setAmount(initialData.amount.toString())
       setDate(initialData.date)
+      setCategory(initialData.category || "")
     }
   }, [initialData])
 
@@ -36,7 +38,7 @@ export function TransactionForm({ onSubmit, initialData, onCancel }: Transaction
     e.preventDefault()
 
     if (!description.trim() || !amount || Number.parseFloat(amount) <= 0) {
-      alert("Please fill in all fields correctly!")
+      alert("Mohon isi semua field dengan benar!")
       return
     }
 
@@ -45,6 +47,7 @@ export function TransactionForm({ onSubmit, initialData, onCancel }: Transaction
       description: description.trim(),
       amount: Number.parseFloat(amount),
       date,
+      category: category.trim() || undefined,
     })
 
     // Reset form if not editing
@@ -52,6 +55,7 @@ export function TransactionForm({ onSubmit, initialData, onCancel }: Transaction
       setDescription("")
       setAmount("")
       setDate(new Date().toISOString().split("T")[0])
+      setCategory("")
     }
   }
 
@@ -60,6 +64,7 @@ export function TransactionForm({ onSubmit, initialData, onCancel }: Transaction
     setAmount("")
     setDate(new Date().toISOString().split("T")[0])
     setType("expense")
+    setCategory("")
     onCancel?.()
   }
 

@@ -1,8 +1,9 @@
 "use client"
 
-import { Wallet, LayoutDashboard } from "lucide-react"
+import { Wallet, LayoutDashboard, Moon, Sun } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Cat } from "@phosphor-icons/react";
+import { useTheme } from "@/components/theme-provider"
 
 interface NavigationProps {
   activeTab: "dashboard" | "tracker"
@@ -10,6 +11,8 @@ interface NavigationProps {
 }
 
 export function Navigation({ activeTab, onTabChange }: NavigationProps) {
+  const { theme, toggleTheme } = useTheme()
+  
   return (
     <nav className="bg-white/80 backdrop-blur-sm border-b border-blue-200 sticky top-0 z-50">
       <div className="container mx-auto px-4">
@@ -37,6 +40,9 @@ export function Navigation({ activeTab, onTabChange }: NavigationProps) {
             >
               <Wallet className="w-4 h-4" />
               Expense Tracker
+            </Button>
+            <Button variant="ghost" size="icon" onClick={toggleTheme} className="ml-2">
+              {theme === "light" ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
             </Button>
           </div>
         </div>

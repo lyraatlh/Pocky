@@ -18,7 +18,7 @@ export function StatsCards({ income, expense, balance }: StatsCardsProps) {
   return (
     <div className="grid md:grid-cols-3 gap-4">
       <Card className="bg-gradient-to-br from-blue-100 to-blue-50 border-blue-200 shadow-lg">
-        <CardContent className="pt-6">
+        <CardContent className="pt-4">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-semibold text-blue-900">Pemasukan</p>
@@ -32,7 +32,7 @@ export function StatsCards({ income, expense, balance }: StatsCardsProps) {
       </Card>
 
       <Card className="bg-gradient-to-br from-rose-100 to-rose-50 border-rose-200 shadow-lg">
-        <CardContent className="pt-6">
+        <CardContent className="pt-4">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-semibold text-rose-900">Pengeluaran</p>
@@ -46,7 +46,7 @@ export function StatsCards({ income, expense, balance }: StatsCardsProps) {
       </Card>
 
       <Card className="bg-gradient-to-br from-blue-100 to-blue-50 border-blue-200 shadow-lg">
-        <CardContent className="pt-6">
+        <CardContent className="pt-4">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-semibold text-blue-900">Saldo</p>

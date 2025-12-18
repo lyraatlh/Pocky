@@ -5,6 +5,9 @@ import { Header } from "@/components/header"
 import { StatsCards } from "@/components/stats-cards"
 import { TransactionForm } from "@/components/transaction-form"
 import { TransactionList } from "@/components/transaction-list"
+import { BudgetPlanner } from "@/components/budget-planner"
+import { ExpenseCharts } from "@/components/expense-charts"
+import { ExportData } from "@/components/export-data"
 import type { Transaction } from "@/types/transaction"
 
 export function ExpenseTracker() {
@@ -63,6 +66,12 @@ export function ExpenseTracker() {
           onCancel={cancelEdit}
         />
         <TransactionList transactions={transactions} onEdit={startEdit} onDelete={deleteTransaction} />
+
+        <div className="space-y-6">
+          <BudgetPlanner transactions={transactions} />
+          <ExportData transactions={transactions} />
+          <ExpenseCharts transactions={transactions} />
+        </div>
       </div>
     </>
   )
