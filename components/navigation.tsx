@@ -26,23 +26,53 @@ export function Navigation({ activeTab, onTabChange }: NavigationProps) {
 
           <div className="flex gap-2">
             <Button
-              variant={activeTab === "dashboard" ? "default" : "ghost"}
+              variant="ghost"
               onClick={() => onTabChange("dashboard")}
-              className="gap-2"
+              className={`
+                gap-2
+                rounded-xl
+                px-4
+                text-blue-900 dark:text-white
+                hover:bg-blue-200 dark:hover:bg-blue-800
+                ${activeTab === "dashboard" ? "bg-blue-200 dark:bg-blue-800" : ""}
+              `}
             >
               <LayoutDashboard className="w-4 h-4" />
               Dashboard
             </Button>
+
             <Button
-              variant={activeTab === "tracker" ? "default" : "ghost"}
+              variant="ghost"
               onClick={() => onTabChange("tracker")}
-              className="gap-2"
+              className={`
+                gap-2
+                rounded-xl
+                px-4
+                text-blue-900 dark:text-white
+                hover:bg-blue-200 dark:hover:bg-blue-800
+                ${activeTab === "tracker" ? "bg-blue-200 dark:bg-blue-800" : ""}
+              `}
             >
               <Wallet className="w-4 h-4" />
               Expense Tracker
             </Button>
-            <Button variant="ghost" size="icon" onClick={toggleTheme} className="ml-2">
-              {theme === "light" ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={toggleTheme}
+              className="
+                ml-2
+                rounded-xl
+                text-blue-900 dark:text-white
+                hover:bg-blue-200 dark:hover:bg-blue-800
+              "
+            >
+              {theme === "light" ? (
+                <Moon className="h-5 w-5" />
+              ) : (
+                <Sun className="h-5 w-5" />
+              )}
             </Button>
           </div>
         </div>

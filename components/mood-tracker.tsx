@@ -206,7 +206,7 @@ import {
     const dominantMood = totalEntries > 0 ? Object.entries(moodCounts).sort(([, a], [, b]) => b - a)[0]?.[0] : null
 
     return (
-        <Card className="p-6 bg-gradient-to-br from-blue-50 via-blue-100 to-blue-200 dark:from-blue-950 dark:via-blue-900 dark:to-blue-800 border-1 border-blue-200 dark:border-blue-700">
+        <Card className="p-6 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950/30 dark:to-blue-900/40 border-1 border-blue-200 dark:border-blue-900">
         <div className="flex items-center justify-between mb-6">
             <div>
             <h3 className="text-2xl font-bold text-blue-900 dark:text-blue-100 mb-1">Mood Tracker</h3>
