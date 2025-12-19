@@ -226,11 +226,11 @@ import {
 
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="grid w-full grid-cols-2 bg-blue-200/50">
-                <TabsTrigger value="write" className="data-[state=active]:bg-blue-300 data-[state=active]:text-blue-100">
+                <TabsTrigger value="write" className="data-[state=active]:bg-blue-300 data-[state=active]:text-white">
                 <Edit2 className="h-4 w-4 mr-2" />
                 Write
                 </TabsTrigger>
-                <TabsTrigger value="browse" className="data-[state=active]:bg-blue-300 data-[state=active]:text-blue-100">
+                <TabsTrigger value="browse" className="data-[state=active]:bg-blue-300 data-[state=active]:text-white">
                 <FileText className="h-4 w-4 mr-2" />
                 Browse
                 </TabsTrigger>
@@ -256,7 +256,7 @@ import {
                     {formatDate(currentDate)}
                     </div>
                     {!isToday && (
-                    <Button onClick={goToToday} size="sm" variant="link" className="text-xs text-blue-700">
+                    <Button onClick={goToToday} size="sm" variant="link" className="text-xs text-blue-900">
                         Back to today
                     </Button>
                     )}
@@ -276,14 +276,14 @@ import {
                 placeholder="Entry title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="border-blue-200 bg-white font-regular text-blue-900 placeholder:text-blue-900"
+                className="border-blue-200 bg-white font-regular text-blue-900 placeholder:text-gray-300"
                 />
 
                 <Textarea
                 placeholder="What's on your mind today?"
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                className="resize-none border-blue-200 bg-white min-h-[200px] text-blue-900 placeholder:text-blue-900"
+                className="resize-none border-blue-200 bg-white min-h-[200px] text-blue-900 placeholder:text-gray-300"
                 rows={8}
                 />
 
@@ -294,11 +294,11 @@ import {
                 </div>
                 <div className="flex gap-2">
                     <Input
-                    placeholder="Add tag..."
+                    placeholder="Add tag"
                     value={tagInput}
                     onChange={(e) => setTagInput(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addTag())}
-                    className="border-blue-200 bg-white text-blue-900 placeholder:text-blue-400"
+                    className="border-blue-200 bg-white text-blue-900 placeholder:text-gray-400"
                     />
                     <Button onClick={addTag} size="sm" className="bg-blue-300 hover:bg-blue-200 text-blue-100">
                     <Plus className="h-4 w-4" />
@@ -353,7 +353,7 @@ import {
                     placeholder="Search entries"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10 border-blue-200 bg-white text-blue-900 placeholder:text-blue-900"
+                    className="pl-10 border-blue-200 bg-white text-blue-900 placeholder:text-gray-300"
                     />
                     {searchQuery && (
                     <Button

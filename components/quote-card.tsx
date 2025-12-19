@@ -117,7 +117,7 @@ export function QuoteCard() {
             placeholder="Enter your quote here"
             value={editText}
             onChange={(e) => setEditText(e.target.value)}
-            className="bg-white/80 border-blue-200 min-h-[100px]"
+            className="placeholder:text-gray-300 bg-white/80 border-blue-200 min-h-[100px]"
             autoFocus
           />
           <div className="flex gap-2">

@@ -2,12 +2,12 @@
 
 import type React from "react"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Plus, Trash2, Check, Flame, Target, Search, Edit, Upload, LinkIcon, Filter, TrendingUp } from "lucide-react"
+import { Plus, Trash2, Check, Flame, Target, Search, Edit, Upload, LinkIcon, Filter, TrendingUp, ImageIcon } from "lucide-react"
 import {
     Dialog,
     DialogContent,
@@ -41,6 +41,7 @@ import {
     const [customIconUrl, setCustomIconUrl] = useState("")
     const [iconType, setIconType] = useState<"emoji" | "url" | "upload">("emoji")
     const [uploadedImage, setUploadedImage] = useState<string>("")
+    const fileInputRef = useRef<HTMLInputElement>(null)
 
     useEffect(() => {
         const saved = localStorage.getItem("habits")
@@ -211,18 +212,7 @@ import {
             <Button
             onClick={() => setIsAdding(true)}
             size="sm"
-            className="bg-gradient-to-r 
-                        from-blue-300 
-                        to-blue-300 
-                        dark:from-blue-700
-                        dark:to-blue-700
-                        hover:from-blue-200 
-                        hover:to-blue-200 
-                        dark:hover:from-blue-800/40
-                        dark:hover:to-blue-800/40
-                        text-white 
-                        rounded-lg
-                        ">
+            className="text-gray-700 dark:text-white bg-blue-200 dark:bg-blue-900 hover:text-gray-800 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-blue-800 border-1 border-blue-200 dark:border-blue-900">
             <Plus className="h-4 w-4" />
             Add Habit
             </Button>
@@ -350,7 +340,7 @@ import {
 
         {/* Add/Edit Dialog */}
         <Dialog open={isAdding || editingHabit !== null} onOpenChange={(open) => !open && resetForm()}>
-            <DialogContent className="max-w-2xl bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900 border-2 border-blue-300 dark:border-blue-900">
+            <DialogContent className="max-w-2xl bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900 border-1 border-blue-300 dark:border-blue-900">
             <DialogHeader>
                 <DialogTitle className="text-2xl font-bold text-blue-900 dark:text-blue-100">
                 {editingHabit ? "Edit Habit" : "Create New Habit"}
@@ -368,9 +358,12 @@ import {
                 </label>
                 <Tabs value={iconType} onValueChange={(v) => setIconType(v as typeof iconType)}>
                     <TabsList className="grid w-full grid-cols-3 bg-blue-200 dark:bg-blue-900">
-                    <TabsTrigger value="emoji">Emoji</TabsTrigger>
-                    <TabsTrigger value="url">URL</TabsTrigger>
-                    <TabsTrigger value="upload">Upload</TabsTrigger>
+                    <TabsTrigger value="emoji" className="data-[state=active]:bg-blue-300 data-[state=active]:text-white">
+                        Emoji</TabsTrigger>
+                    <TabsTrigger value="url" className="data-[state=active]:bg-blue-300 data-[state=active]:text-white">
+                        <LinkIcon className="w-4 h-4 mr-1" />URL</TabsTrigger>
+                    <TabsTrigger value="upload" className="data-[state=active]:bg-blue-300 data-[state=active]:text-white">
+                        <Upload className="w-4 h-4 mr-1" />Upload</TabsTrigger>
                     </TabsList>
                     <TabsContent value="emoji" className="mt-3">
                     <div className="flex gap-2 flex-wrap p-3 bg-white dark:bg-gray-900 rounded-lg border-2 border-blue-200 dark:border-blue-900">
@@ -417,16 +410,26 @@ import {
                     <div className="space-y-2">
                         <div className="flex items-center gap-2">
                         <Input
+                            ref={fileInputRef}
                             type="file"
                             accept="image/*"
                             onChange={handleImageUpload}
-                            className="border-2 border-blue-200 dark:border-blue-800 bg-white dark:bg-blue-950"
+                            className="hidden"
                         />
+                        <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => fileInputRef.current?.click()}
+                        className="w-full text-gray-700 dark:text-white bg-blue-200 dark:bg-blue-900 hover:text-gray-800 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-blue-800 border-1 border-blue-200 dark:border-blue-900"
+                        >
+                            <ImageIcon className="w-4 h-4 mr-2" />
+                            Choose Image or GIF
+                        </Button>
                         <Upload className="h-5 w-5 text-blue-400" />
                         </div>
                         {uploadedImage && (
-                        <div className="p-3 bg-white dark:bg-blue-950 rounded-lg border-2 border-blue-200 dark:border-blue-800">
-                            <p className="text-xs text-blue-700 dark:text-blue-300 mb-2">Preview:</p>
+                        <div className="p-3 bg-white dark:bg-blue-950 rounded-lg border-1 border-blue-200 dark:border-blue-800">
+                            <p className="text-xs text-blue-900 dark:text-blue-300 mb-2">Preview:</p>
                             <img
                             src={uploadedImage || "/placeholder.svg"}
                             alt="Preview"
@@ -443,7 +446,7 @@ import {
                 <div>
                 <label className="text-sm font-medium text-blue-900 dark:text-blue-100 mb-2 block">Habit Name</label>
                 <Input
-                    placeholder="e.g., Morning Exercise"
+                    placeholder="Morning Exercise"
                     value={formName}
                     onChange={(e) => setFormName(e.target.value)}
                     className="border-2 border-blue-200 dark:border-blue-800 bg-white dark:bg-blue-950"
@@ -498,12 +501,12 @@ import {
                 <Button
                 variant="outline"
                 onClick={resetForm}
-                className="border-blue-200 dark:border-blue-800 bg-gradient-to-br from-blue-50 to-blue-100 hover:from-blue-200 hover:to-blue-300 dark:from-blue-950 dark:blue-800 dark:to-blue-800 dark:hover:from-blue-800 hover:to-blue-900 dark:border-blue-900">
+                className="text-gray-700 dark:text-white bg-blue-200 dark:bg-blue-900 hover:text-gray-800 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-blue-800 border-1 border-blue-200 dark:border-blue-900">
                 Cancel
                 </Button>
                 <Button
                 onClick={editingHabit ? updateHabit : addHabit}
-                className="text-blue-900 dark:text-blue-100 border border-blue-200 dark:border-blue-800 bg-gradient-to-br from-blue-50 to-blue-100 hover:text-white hover:from-blue-200 hover:to-blue-300 dark:from-blue-950 dark:blue-800 dark:to-blue-800 dark:hover:from-blue-800 hover:to-blue-900 dark:border-blue-900"
+                className="text-gray-700 dark:text-white bg-blue-200 dark:bg-blue-900 hover:text-gray-800 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-blue-800 border-1 border-blue-200 dark:border-blue-900"
                 >
                 {editingHabit ? "Update Habit" : "Create Habit"}
                 </Button>
@@ -513,7 +516,7 @@ import {
 
         {/* Delete Confirmation Dialog */}
         <Dialog open={deleteConfirm !== null} onOpenChange={(open) => !open && setDeleteConfirm(null)}>
-            <DialogContent className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900 border-2 border-blue-200 dark:border-blue-700">
+            <DialogContent className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900 border-1 border-blue-200 dark:border-blue-700">
             <DialogHeader>
                 <DialogTitle className="text-xl font-bold text-blue-900 dark:text-blue-100">Delete Habit</DialogTitle>
                 <DialogDescription className="text-blue-700 dark:text-blue-300">

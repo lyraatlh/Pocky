@@ -113,7 +113,7 @@ export function TransactionForm({ onSubmit, initialData, onCancel }: Transaction
               placeholder="beli makanan pocky"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="border-blue-200 focus:border-blue-200"
+              className="placeholder:text-gray-400 border-blue-200 focus:border-blue-200"
             />
           </div>
 
@@ -127,7 +127,7 @@ export function TransactionForm({ onSubmit, initialData, onCancel }: Transaction
               onChange={(e) => setAmount(e.target.value)}
               min="0"
               step="0.01"
-              className="border-blue-200 focus:border-blue-200"
+              className="placeholder:text-gray-400 border-blue-200 focus:border-blue-200"
             />
           </div>
 
@@ -138,7 +138,7 @@ export function TransactionForm({ onSubmit, initialData, onCancel }: Transaction
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              className="border-blue-200 focus:border-blue-200"
+              className="text-gray-700 border-blue-200 focus:border-blue-200"
             />
           </div>
 

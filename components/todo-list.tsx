@@ -82,7 +82,7 @@ export function TodoList() {
           value={newTodo}
           onChange={(e) => setNewTodo(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && addTodo()}
-          className="bg-white/80 border-blue-200"
+          className="placeholder:text-gray-300 bg-white/80 border-blue-200"
         />
         <Button onClick={addTodo} size="icon" className="shrink-0">
           <Plus className="w-4 h-4" />
