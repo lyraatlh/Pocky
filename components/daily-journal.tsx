@@ -213,7 +213,7 @@ import {
 
     return (
         <>
-        <Card className="p-6 bg-gradient-to-br from-blue-100 via-blue-100 to-blue-50 border-2 border-blue-200">
+        <Card className="p-6 bg-gradient-to-br from-blue-100 via-blue-100 to-blue-50 border-1 border-blue-200">
             <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
                 <BookOpen className="h-6 w-6 text-blue-900" />

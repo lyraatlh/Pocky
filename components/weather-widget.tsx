@@ -83,7 +83,7 @@ interface WeatherData {
 
     if (loading) {
         return (
-        <Card className="p-6 bg-gradient-to-br from-blue-200 to-blue-100 border-2 border-blue-200">
+        <Card className="p-6 bg-gradient-to-br from-blue-200 to-blue-100 border-1 border-blue-200">
             <div className="flex items-center justify-center py-8">
             <Loader2 className="h-8 w-8 animate-spin text-primary" />
             </div>
@@ -93,7 +93,7 @@ interface WeatherData {
 
     if (error || !weather) {
         return (
-        <Card className="p-6 bg-gradient-to-br from-blue-200 to-blue-100 border-2 border-blue-200">
+        <Card className="p-6 bg-gradient-to-br from-blue-200 to-blue-100 border-1 border-blue-200">
             <div className="text-center text-muted-foreground">
             <Cloud className="h-12 w-12 mx-auto mb-2 opacity-50" />
             <p className="text-sm">{error || "Weather unavailable"}</p>
@@ -103,7 +103,7 @@ interface WeatherData {
     }
 
     return (
-        <Card className="p-6 bg-gradient-to-br from-blue-200 to-blue-100 border-2 border-blue-200">
+        <Card className="p-6 bg-gradient-to-br from-blue-200 to-blue-100 border-1 border-blue-200">
         <div className="flex items-center justify-between">
             <div className="flex-1">
             <div className="text-lg font-semibold text-blue-900 mb-1">{weather.location}</div>

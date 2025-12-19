@@ -69,7 +69,7 @@ export function ReminderCard() {
   }
 
   return (
-    <Card className="p-6 bg-white/60 backdrop-blur-sm border-blue-200">
+    <Card className="p-6 bg-white/60 backdrop-blur-sm border-1 border-blue-200">
       <h3 className="text-lg font-semibold text-blue-900 mb-2">Reminder</h3>
 
       <div className="space-y-3 mb-4">

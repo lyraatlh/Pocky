@@ -6,4 +6,8 @@ export interface Habit {
     completedDates: string[]
     color: string
     createdAt: string
+    customIconUrl?: string
+    description?: string
+    category?: string
+    goal?: number
 }

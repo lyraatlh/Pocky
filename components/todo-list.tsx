@@ -66,7 +66,7 @@ export function TodoList() {
   }
 
   return (
-    <Card className="p-6 bg-white/60 backdrop-blur-sm border-blue-200">
+    <Card className="p-6 bg-white/60 backdrop-blur-sm border-1 border-blue-200">
       <div className="flex items-center gap-2 mb-4">
         <CheckSquare 
         size={25} 

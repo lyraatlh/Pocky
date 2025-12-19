@@ -96,7 +96,7 @@ export function QuoteCard() {
 
   if (quotes.length === 0) {
     return (
-      <Card className="p-6 bg-white/60 backdrop-blur-sm border-blue-200">
+      <Card className="p-6 bg-white/60 backdrop-blur-sm border-1 border-blue-200">
         <div className="text-center">
           <p className="text-blue-900 mb-4">No quotes yet</p>
           <Button onClick={startAdd}>

@@ -18,7 +18,7 @@ export function DigitalClock() {
   const days = ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]
 
   return (
-    <Card className="p-8 bg-white/60 backdrop-blur-sm border-blue-200">
+    <Card className="p-8 bg-white/60 backdrop-blur-sm border-1 border-blue-200">
       <div className="flex items-center justify-between">
         <div className="text-8xl font-bold text-blue-300 tracking-tight">
           {String(displayHours).padStart(2, "0")}.{String(minutes).padStart(2, "0")}

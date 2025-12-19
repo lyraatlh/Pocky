@@ -67,7 +67,7 @@ export function PomodoroTimer() {
     }
 
     return (
-        <Card className="p-6 bg-gradient-to-br from-blue-50 to-blue-50 border-2 border-blue-200">
+        <Card className="p-6 bg-gradient-to-br from-blue-50 to-blue-50 border-1 border-blue-200">
         <div className="flex items-center justify-between mb-4">
             <h3 className="text-xl font-bold text-blue-900">Pomodoro Timer</h3>
             <div className="text-sm font-medium text-muted-foreground">Sessions: {sessions}</div>

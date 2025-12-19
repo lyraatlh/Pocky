@@ -224,7 +224,7 @@ interface AchievementStats {
             </div>
         )}
 
-        <Card className="p-6 bg-gradient-to-br from-blue-100 to-blue-50 dark:from-blue-950/30 dark:to-blue-900/40 border-2 border-blue-200 dark:border-blue-800">
+        <Card className="p-6 bg-gradient-to-br from-blue-100 to-blue-50 dark:from-blue-950/30 dark:to-blue-900/40 border-1 border-blue-200 dark:border-blue-800">
             <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
                 <div className="p-2 bg-blue-200 dark:bg-blue-900 rounded-lg">
@@ -275,7 +275,7 @@ interface AchievementStats {
                             <Target className="w-3 h-3" />
                             {achievement.progress} / {achievement.requirement}
                             </div>
-                            <div className="text-xs font-bold text-blue-600 dark:text-blue-400">
+                            <div className="text-xs font-bold text-blue-900 dark:text-blue-400">
                             {Math.min((achievement.progress / achievement.requirement) * 100, 100).toFixed(0)}%
                             </div>
                         </div>

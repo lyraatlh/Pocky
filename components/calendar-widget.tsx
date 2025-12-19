@@ -43,7 +43,7 @@ export function CalendarWidget() {
   }
 
   return (
-    <Card className="p-6 bg-white/60 backdrop-blur-sm border-blue-200">
+    <Card className="p-6 bg-white/60 backdrop-blur-sm border-1 border-blue-200">
       <div className="flex items-center justify-between mb-4">
         <Button variant="ghost" size="icon" onClick={previousMonth} className="text-blue-400 hover:text-blue-600">
           <ChevronLeft className="w-5 h-5" />
