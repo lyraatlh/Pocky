@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import type { Transaction } from "@/types/transaction"
 import { Plus, X } from "lucide-react"
 import { MoneyWavy, HandCoins } from "@phosphor-icons/react";
@@ -16,6 +17,20 @@ interface TransactionFormProps {
   initialData?: Transaction | null
   onCancel?: () => void
 }
+
+const EXPENSE_CATEGORIES = [
+  "Food & Dining",
+  "Transportation",
+  "Shopping",
+  "Entertainment",
+  "Bills & Utilities",
+  "Healthcare",
+  "Education",
+  "Travel",
+  "Other",
+]
+
+const INCOME_CATEGORIES = ["Salary", "Freelance", "Investment", "Gift", "Bonus", "Other"]
 
 export function TransactionForm({ onSubmit, initialData, onCancel }: TransactionFormProps) {
   const [type, setType] = useState<"income" | "expense">("expense")
@@ -38,7 +53,7 @@ export function TransactionForm({ onSubmit, initialData, onCancel }: Transaction
     e.preventDefault()
 
     if (!description.trim() || !amount || Number.parseFloat(amount) <= 0) {
-      alert("Mohon isi semua field dengan benar!")
+      alert("Please fill in all fields correctly!")
       return
     }
 
@@ -68,11 +83,13 @@ export function TransactionForm({ onSubmit, initialData, onCancel }: Transaction
     onCancel?.()
   }
 
+  const categories = type === "income" ? INCOME_CATEGORIES : EXPENSE_CATEGORIES
+
   return (
-    <Card className="bg-gradient-to-br from-blue-50 to-blue-10 border-blue-200 shadow-lg">
+    <Card className="bg-gradient-to-br from-blue-50 to-blue-10 border-blue-200 border-1">
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-primary text-blue-900">
-          {initialData ? "Edit Transaksi" : "Tambah Transaksi Baru"}
+          {initialData ? "Edit Transaction" : "Add New Transaction"}
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -80,8 +97,17 @@ export function TransactionForm({ onSubmit, initialData, onCancel }: Transaction
           <div className="flex gap-2">
             <Button
               type="button"
-              variant={type === "income" ? "default" : "outline"}
-              className={`flex-1 ${type === "income" ? "bg-blue-300 hover:bg-blue-200" : ""}`}
+              variant="outline"
+              data-state={type === "income" ? "active" : "inactive"}
+              className="
+                flex-1 gap-2
+                border-blue-200 text-blue-900
+                hover:bg-blue-50 hover:text-blue-900
+
+                data-[state=active]:bg-blue-200
+                data-[state=active]:text-blue-900
+                data-[state=active]:border-blue-200
+              "
               onClick={() => setType("income")}
             >
                 <HandCoins
@@ -89,12 +115,21 @@ export function TransactionForm({ onSubmit, initialData, onCancel }: Transaction
                 weight="duotone"
                 color="#1c398e"
                 />
-              Pemasukan
+              Income
             </Button>
             <Button
               type="button"
-              variant={type === "expense" ? "default" : "outline"}
-              className={`flex-1 ${type === "expense" ? "bg-blue-300 hover:bg-blue-200" : ""}`}
+              variant="outline"
+              data-state={type === "expense" ? "active" : "inactive"}
+              className="
+                flex-1 gap-2
+                border-blue-200 text-blue-00
+                hover:bg-blue-50 hover:text-blue-900
+
+                data-[state=active]:bg-blue-200
+                data-[state=active]:text-blue-900
+                data-[state=active]:border-blue-200
+              "
               onClick={() => setType("expense")}
             >
               <MoneyWavy
@@ -102,12 +137,12 @@ export function TransactionForm({ onSubmit, initialData, onCancel }: Transaction
                 weight="duotone"
                 color="#1c398e"
               />
-              Pengeluaran
+              Expense
             </Button>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="description">Deskripsi</Label>
+            <Label htmlFor="description" className="text-blue-900">Description</Label>
             <Input
               id="description"
               placeholder="beli makanan pocky"
@@ -118,7 +153,25 @@ export function TransactionForm({ onSubmit, initialData, onCancel }: Transaction
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="amount">Jumlah (Rp)</Label>
+            <Label htmlFor="category" className="text-blue-900">
+              Category
+            </Label>
+            <Select value={category} onValueChange={setCategory}>
+              <SelectTrigger className="w-full border-blue-200 focus:border-blue-300 focus:ring-blue-200">
+                <SelectValue placeholder="Select a category" />
+              </SelectTrigger>
+              <SelectContent>
+                {categories.map((cat) => (
+                  <SelectItem key={cat} value={cat}>
+                    {cat}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="amount" className="text-blue-900">Amount (Rp)</Label>
             <Input
               id="amount"
               type="number"
@@ -126,13 +179,13 @@ export function TransactionForm({ onSubmit, initialData, onCancel }: Transaction
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               min="0"
-              step="0.01"
+              step="1000"
               className="placeholder:text-gray-400 border-blue-200 focus:border-blue-200"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="date">Tanggal</Label>
+            <Label htmlFor="date" className="text-blue-900">Date</Label>
             <Input
               id="date"
               type="date"
@@ -143,16 +196,16 @@ export function TransactionForm({ onSubmit, initialData, onCancel }: Transaction
           </div>
 
           <div className="flex gap-2">
-            <Button type="submit" className="flex-1 bg-blue-300 hover:bg-blue-200/90">
+            <Button type="submit" className="flex-1 w-full text-gray-700 dark:text-white bg-blue-200 dark:bg-blue-900 hover:text-gray-800 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-blue-800 border-1 border-blue-200 dark:border-blue-900">
               {initialData ? (
                 <>
                   <Plus className="h-4 w-4 mr-2" />
-                  Update Transaksi
+                  Update Transaction
                 </>
               ) : (
                 <>
                   <Plus className="h-4 w-4 mr-2" />
-                  Tambah Transaksi
+                  Add Transaction
                 </>
               )}
             </Button>

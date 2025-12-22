@@ -1,7 +1,11 @@
 "use client"
 
+import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import type { Transaction } from "@/types/transaction"
 import { Pencil, Trash2 } from "lucide-react"
 import { MoneyWavy, HandCoins, PawPrint } from "@phosphor-icons/react";
@@ -13,21 +17,38 @@ interface TransactionListProps {
 }
 
 export function TransactionList({ transactions, onEdit, onDelete }: TransactionListProps) {
+  const [searchQuery, setSearchQuery] = useState("")
+  const [filterType, setFilterType] = useState<"all" | "income" | "expense">("all")
+  const [filterCategory, setFilterCategory] = useState<string>("all")
+
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("id-ID", {
       style: "currency",
       currency: "IDR",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
     }).format(amount)
   }
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
-    return new Intl.DateTimeFormat("id-ID", {
+    return new Intl.DateTimeFormat("en-US", {
       day: "numeric",
       month: "short",
       year: "numeric",
     }).format(date)
   }
+
+  const allCategories = Array.from(new Set(transactions.map((t) => t.category).filter(Boolean)))
+
+  const filteredTransactions = transactions.filter((transaction) => {
+    const matchesSearch =
+      transaction.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (transaction.category || "").toLowerCase().includes(searchQuery.toLowerCase())
+    const matchesType = filterType === "all" || transaction.type === filterType
+    const matchesCategory = filterCategory === "all" || transaction.category === filterCategory
+    return matchesSearch && matchesType && matchesCategory
+  })
 
   return (
     <Card className="bg-gradient-to-br from-blue-100 to-blue-50 border-blue-200 shadow-lg">
