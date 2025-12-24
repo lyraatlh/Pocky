@@ -1,14 +1,14 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Card } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Plus, Trash2, TrendingDown } from "lucide-react"
+import { Plus, Trash2, TrendingDown, AlertCircle } from "lucide-react"
 import type { Budget } from "@/types/budget"
 import type { Transaction } from "@/types/transaction"
 
-const BUDGET_COLORS = ["bg-blue-500", "bg-purple-500", "bg-pink-500", "bg-green-500", "bg-yellow-500", "bg-red-500"]
+const BUDGET_COLORS = ["bg-blue-400", "bg-blue-500", "bg-cyan-400", "bg-sky-400", "bg-indigo-400", "bg-blue-300"]
 
 interface BudgetPlannerProps {
     transactions: Transaction[]
@@ -31,8 +31,17 @@ interface BudgetPlannerProps {
         localStorage.setItem("budgets", JSON.stringify(budgets))
     }, [budgets])
 
+    const formatCurrency = (amount: number) => {
+        return new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+        }).format(amount)
+    }
+
     const addBudget = () => {
-        if (newCategory.trim() && newLimit) {
+        if (newCategory.trim() && newLimit && Number.parseFloat(newLimit) > 0) {
         const budget: Budget = {
             id: Date.now().toString(),
             category: newCategory,
@@ -47,7 +56,9 @@ interface BudgetPlannerProps {
     }
 
     const deleteBudget = (id: string) => {
+        if (confirm("Delete this budget?")) {
         setBudgets(budgets.filter((b) => b.id !== id))
+        }
     }
 
     const getSpentAmount = (category: string) => {
@@ -61,86 +72,120 @@ interface BudgetPlannerProps {
     }
 
     return (
-        <Card className="p-6 bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 shadow-lg">
-        <div className="flex items-center justify-between mb-4">
-            <h3 className="text-xl font-bold text-primary">Budget Planner</h3>
-            <Button onClick={() => setIsAdding(!isAdding)} size="sm" className="bg-primary hover:bg-primary/90 text-white">
-            <Plus className="h-4 w-4" />
+        <Card className="bg-gradient-to-br from-blue-50 to-white border-blue-200 shadow-lg">
+        <CardHeader>
+            <div className="flex items-center justify-between">
+            <CardTitle className="text-blue-900">Budget Planner</CardTitle>
+            <Button
+                onClick={() => setIsAdding(!isAdding)}
+                size="sm"
+                className="bg-blue-900 hover:bg-blue-800 text-white gap-1"
+            >
+                <Plus className="h-4 w-4" />
+                Add Budget
             </Button>
-        </div>
-
-        {isAdding && (
-            <div className="mb-4 p-4 bg-white rounded-lg border-2 border-primary/20">
-            <div className="flex gap-2">
+            </div>
+        </CardHeader>
+        <CardContent>
+            <div className="space-y-4">
+            {isAdding && (
+                <div className="p-4 bg-blue-50 rounded-lg border-2 border-blue-200 space-y-3">
                 <Input
-                placeholder="Category (e.g., Food)"
-                value={newCategory}
-                onChange={(e) => setNewCategory(e.target.value)}
-                className="flex-1 border-primary/30"
+                    placeholder="Category name"
+                    value={newCategory}
+                    onChange={(e) => setNewCategory(e.target.value)}
+                    className="border-blue-200 focus:border-blue-300 focus:ring-blue-200"
                 />
                 <Input
-                placeholder="Limit"
-                type="number"
-                value={newLimit}
-                onChange={(e) => setNewLimit(e.target.value)}
-                onKeyPress={(e) => e.key === "Enter" && addBudget()}
-                className="w-32 border-primary/30"
+                    placeholder="Budget limit (Rp)"
+                    type="number"
+                    value={newLimit}
+                    onChange={(e) => setNewLimit(e.target.value)}
+                    onKeyPress={(e) => e.key === "Enter" && addBudget()}
+                    className="border-blue-200 focus:border-blue-300 focus:ring-blue-200"
+                    min="0"
+                    step="10000"
                 />
-                <Button onClick={addBudget} className="bg-primary hover:bg-primary/90 text-white">
-                Add
-                </Button>
-            </div>
-            </div>
-        )}
-
-        <div className="space-y-3 max-h-96 overflow-y-auto">
-            {budgets.length === 0 ? (
-            <p className="text-center text-muted-foreground py-8">No budgets set. Start planning your spending!</p>
-            ) : (
-            budgets.map((budget) => {
-                const spent = getSpentAmount(budget.category)
-                const percentage = getPercentage(spent, budget.limit)
-                const isOverBudget = spent > budget.limit
-
-                return (
-                <div key={budget.id} className="p-4 bg-white rounded-lg border-2 border-gray-200">
-                    <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                        <div className={`w-3 h-3 rounded-full ${budget.color}`} />
-                        <span className="font-semibold text-foreground">{budget.category}</span>
-                    </div>
-                    <Button onClick={() => deleteBudget(budget.id)} size="sm" variant="ghost" className="text-red-500">
-                        <Trash2 className="h-4 w-4" />
+                <div className="flex gap-2">
+                    <Button onClick={addBudget} className="flex-1 bg-blue-900 hover:bg-blue-800 text-white">
+                    Create Budget
                     </Button>
-                    </div>
-
-                    <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                        <span className={isOverBudget ? "text-red-600 font-semibold" : "text-muted-foreground"}>
-                        Rp {spent.toLocaleString("id-ID")} / Rp {budget.limit.toLocaleString("id-ID")}
-                        </span>
-                        <span className={isOverBudget ? "text-red-600 font-semibold" : "text-muted-foreground"}>
-                        {percentage.toFixed(0)}%
-                        </span>
-                    </div>
-                    <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
-                        <div
-                        className={`h-full ${isOverBudget ? "bg-red-500" : budget.color} transition-all`}
-                        style={{ width: `${percentage}%` }}
-                        />
-                    </div>
-                    {isOverBudget && (
-                        <div className="flex items-center gap-1 text-xs text-red-600">
-                        <TrendingDown className="h-3 w-3" />
-                        Over budget by Rp {(spent - budget.limit).toLocaleString("id-ID")}
-                        </div>
-                    )}
-                    </div>
+                    <Button
+                    onClick={() => {
+                        setIsAdding(false)
+                        setNewCategory("")
+                        setNewLimit("")
+                    }}
+                    variant="outline"
+                    className="border-blue-200 hover:bg-blue-50"
+                    >
+                    Cancel
+                    </Button>
                 </div>
-                )
-            })
+                </div>
             )}
-        </div>
+
+            <div className="space-y-3 max-h-96 overflow-y-auto">
+                {budgets.length === 0 ? (
+                <div className="text-center py-8 text-blue-900/60">
+                    <AlertCircle className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                    <p>No budgets yet. Create one to start tracking spending!</p>
+                </div>
+                ) : (
+                budgets.map((budget) => {
+                    const spent = getSpentAmount(budget.category)
+                    const percentage = getPercentage(spent, budget.limit)
+                    const isOverBudget = spent > budget.limit
+
+                    return (
+                    <div
+                        key={budget.id}
+                        className="p-4 bg-gradient-to-r from-white to-blue-50 rounded-lg border-2 border-blue-200 hover:border-blue-300 transition-all"
+                    >
+                        <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-3">
+                            <div className={`w-4 h-4 rounded-full ${budget.color}`} />
+                            <span className="font-semibold text-blue-900">{budget.category}</span>
+                        </div>
+                        <Button
+                            onClick={() => deleteBudget(budget.id)}
+                            size="sm"
+                            variant="ghost"
+                            className="h-8 w-8 hover:bg-rose-100 hover:text-rose-700 p-0"
+                        >
+                            <Trash2 className="h-4 w-4" />
+                        </Button>
+                        </div>
+
+                        <div className="space-y-2">
+                        <div className="flex justify-between text-sm">
+                            <span className={isOverBudget ? "text-rose-700 font-semibold" : "text-blue-900"}>
+                            {formatCurrency(spent)} / {formatCurrency(budget.limit)}
+                            </span>
+                            <span className={`font-semibold ${isOverBudget ? "text-rose-700" : "text-blue-900"}`}>
+                            {percentage.toFixed(0)}%
+                            </span>
+                        </div>
+                        <div className="w-full h-3 bg-blue-200 rounded-full overflow-hidden">
+                            <div
+                            className={`h-full transition-all ${isOverBudget ? "bg-rose-500" : budget.color}`}
+                            style={{ width: `${percentage}%` }}
+                            />
+                        </div>
+                        {isOverBudget && (
+                            <div className="flex items-center gap-1 text-xs text-rose-700 font-semibold">
+                            <TrendingDown className="h-3 w-3" />
+                            Over by {formatCurrency(spent - budget.limit)}
+                            </div>
+                        )}
+                        </div>
+                    </div>
+                    )
+                })
+                )}
+            </div>
+            </div>
+        </CardContent>
         </Card>
     )
 }

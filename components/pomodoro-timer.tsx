@@ -1,70 +1,11 @@
 "use client"
-
-import { useState, useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Play, Pause, RotateCcw, Coffee } from "lucide-react"
+import { usePomodoro } from "@/hooks/use-pomodoro"
 
 export function PomodoroTimer() {
-    const [minutes, setMinutes] = useState(25)
-    const [seconds, setSeconds] = useState(0)
-    const [isActive, setIsActive] = useState(false)
-    const [isBreak, setIsBreak] = useState(false)
-    const [sessions, setSessions] = useState(0)
-    const intervalRef = useRef<NodeJS.Timeout | null>(null)
-
-    useEffect(() => {
-        if (isActive) {
-        intervalRef.current = setInterval(() => {
-            if (seconds === 0) {
-            if (minutes === 0) {
-                // Timer finished
-                setIsActive(false)
-                if (!isBreak) {
-                setSessions((prev) => prev + 1)
-                // Play notification sound (optional)
-                setIsBreak(true)
-                setMinutes(5)
-                setSeconds(0)
-                } else {
-                setIsBreak(false)
-                setMinutes(25)
-                setSeconds(0)
-                }
-            } else {
-                setMinutes(minutes - 1)
-                setSeconds(59)
-            }
-            } else {
-            setSeconds(seconds - 1)
-            }
-        }, 1000)
-        } else if (intervalRef.current) {
-        clearInterval(intervalRef.current)
-        }
-
-        return () => {
-        if (intervalRef.current) clearInterval(intervalRef.current)
-        }
-    }, [isActive, minutes, seconds, isBreak])
-
-    const toggleTimer = () => {
-        setIsActive(!isActive)
-    }
-
-    const resetTimer = () => {
-        setIsActive(false)
-        setIsBreak(false)
-        setMinutes(25)
-        setSeconds(0)
-    }
-
-    const startBreak = () => {
-        setIsActive(false)
-        setIsBreak(true)
-        setMinutes(5)
-        setSeconds(0)
-    }
+    const { minutes, seconds, isActive, isBreak, sessions, toggleTimer, resetTimer, startBreak } = usePomodoro()
 
     return (
         <Card className="p-6 bg-gradient-to-br from-blue-50 to-blue-50 border-1 border-blue-200">
@@ -101,7 +42,7 @@ export function PomodoroTimer() {
                 onClick={resetTimer}
                 size="lg"
                 variant="outline"
-                className="border-blue-300 text-primary hover:bg-blue-300 text-blue-900/10 text-blue-300"
+                className="border-blue-300 text-primary hover:bg-blue-300 text-blue-900/10 text-blue-300 bg-transparent"
             >
                 <RotateCcw className="mr-2 h-5 w-5" />
                 Reset
@@ -111,7 +52,7 @@ export function PomodoroTimer() {
                 onClick={startBreak}
                 size="lg"
                 variant="outline"
-                className="border-blue-300 text-blue-900 hover:bg-blue-900 text-blue-900/10 text-blue-300"
+                className="border-blue-300 text-blue-900 hover:bg-blue-900 text-blue-900/10 text-blue-300 bg-transparent"
                 >
                 <Coffee className="mr-2 h-5 w-5" />
                 Break

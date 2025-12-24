@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Header } from "@/components/header"
 import { StatsCards } from "@/components/stats-cards"
 import { TransactionForm } from "@/components/transaction-form"
@@ -10,37 +10,20 @@ import { ExpenseCharts } from "@/components/expense-charts"
 import { ExportData } from "@/components/export-data"
 import type { Transaction } from "@/types/transaction"
 
-export function ExpenseTracker() {
-  const [transactions, setTransactions] = useState<Transaction[]>([])
+interface ExpenseTrackerProps {
+  transactions: Transaction[]
+  onAddTransaction: (transaction: Omit<Transaction, "id">) => void
+  onUpdateTransaction: (id: string, transaction: Omit<Transaction, "id">) => void
+  onDeleteTransaction: (id: string) => void
+}
+
+export function ExpenseTracker({
+  transactions,
+  onAddTransaction,
+  onUpdateTransaction,
+  onDeleteTransaction,
+}: ExpenseTrackerProps) {
   const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null)
-
-  useEffect(() => {
-    const stored = localStorage.getItem("transactions")
-    if (stored) {
-      setTransactions(JSON.parse(stored))
-    }
-  }, [])
-
-  useEffect(() => {
-    localStorage.setItem("transactions", JSON.stringify(transactions))
-  }, [transactions])
-
-  const addTransaction = (transaction: Omit<Transaction, "id">) => {
-    const newTransaction: Transaction = {
-      ...transaction,
-      id: Date.now().toString(),
-    }
-    setTransactions([newTransaction, ...transactions])
-  }
-
-  const updateTransaction = (id: string, updated: Omit<Transaction, "id">) => {
-    setTransactions(transactions.map((t) => (t.id === id ? { ...updated, id } : t)))
-    setEditingTransaction(null)
-  }
-
-  const deleteTransaction = (id: string) => {
-    setTransactions(transactions.filter((t) => t.id !== id))
-  }
 
   const startEdit = (transaction: Transaction) => {
     setEditingTransaction(transaction)
@@ -61,11 +44,18 @@ export function ExpenseTracker() {
       <StatsCards income={income} expense={expense} balance={balance} />
       <div className="grid md:grid-cols-2 gap-6 mt-8">
         <TransactionForm
-          onSubmit={editingTransaction ? (data) => updateTransaction(editingTransaction.id, data) : addTransaction}
+          onSubmit={
+            editingTransaction
+              ? (data) => {
+                  onUpdateTransaction(editingTransaction.id, data)
+                  setEditingTransaction(null)
+                }
+              : onAddTransaction
+          }
           initialData={editingTransaction}
           onCancel={cancelEdit}
         />
-        <TransactionList transactions={transactions} onEdit={startEdit} onDelete={deleteTransaction} />
+        <TransactionList transactions={transactions} onEdit={startEdit} onDelete={onDeleteTransaction} />
 
         <div className="space-y-6">
           <BudgetPlanner transactions={transactions} />

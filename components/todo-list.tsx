@@ -1,61 +1,27 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Trash2, Plus, Pencil, X, Check } from "lucide-react"
-import type { Todo } from "@/types/todo"
-import { CheckSquare } from "@phosphor-icons/react";
+import { useTodos } from "@/hooks/use-todos"
+import { CheckSquare } from "@phosphor-icons/react"
 
 export function TodoList() {
-  const [todos, setTodos] = useState<Todo[]>([])
+  const { todos, addTodo, toggleTodo, deleteTodo, updateTodo } = useTodos()
   const [newTodo, setNewTodo] = useState("")
   const [editingId, setEditingId] = useState<string | null>(null)
   const [editText, setEditText] = useState("")
 
-  useEffect(() => {
-    const stored = localStorage.getItem("todos")
-    if (stored) {
-      setTodos(JSON.parse(stored))
-    }
-  }, [])
-
-  useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(todos))
-  }, [todos])
-
-  const addTodo = () => {
-    if (newTodo.trim()) {
-      const todo: Todo = {
-        id: Date.now().toString(),
-        text: newTodo,
-        completed: false,
-        createdAt: Date.now(),
-      }
-      setTodos([todo, ...todos])
-      setNewTodo("")
-    }
+  const handleAddTodo = () => {
+    addTodo(newTodo)
+    setNewTodo("")
   }
 
-  const toggleTodo = (id: string) => {
-    setTodos(todos.map((todo) => (todo.id === id ? { ...todo, completed: !todo.completed } : todo)))
-  }
-
-  const deleteTodo = (id: string) => {
-    setTodos(todos.filter((todo) => todo.id !== id))
-  }
-
-  const startEdit = (todo: Todo) => {
-    setEditingId(todo.id)
-    setEditText(todo.text)
-  }
-
-  const saveEdit = (id: string) => {
-    if (editText.trim()) {
-      setTodos(todos.map((todo) => (todo.id === id ? { ...todo, text: editText } : todo)))
-    }
+  const handleSaveEdit = (id: string) => {
+    updateTodo(id, editText)
     setEditingId(null)
     setEditText("")
   }
@@ -68,11 +34,7 @@ export function TodoList() {
   return (
     <Card className="p-6 bg-white/60 backdrop-blur-sm border-1 border-blue-200">
       <div className="flex items-center gap-2 mb-4">
-        <CheckSquare 
-        size={25} 
-        color="#486fa3" 
-        weight="duotone" 
-        />
+        <CheckSquare size={25} color="#486fa3" weight="duotone" />
         <h2 className="text-xl font-bold text-blue-900">To-do's list</h2>
       </div>
 
@@ -81,10 +43,10 @@ export function TodoList() {
           placeholder="Add new task"
           value={newTodo}
           onChange={(e) => setNewTodo(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && addTodo()}
+          onKeyDown={(e) => e.key === "Enter" && handleAddTodo()}
           className="placeholder:text-gray-300 bg-white/80 border-blue-200"
         />
-        <Button onClick={addTodo} size="icon" className="shrink-0">
+        <Button onClick={handleAddTodo} size="icon" className="shrink-0">
           <Plus className="w-4 h-4" />
         </Button>
       </div>
@@ -105,11 +67,11 @@ export function TodoList() {
                   <Input
                     value={editText}
                     onChange={(e) => setEditText(e.target.value)}
-                    onKeyDown={(e) => e.key === "Enter" && saveEdit(todo.id)}
+                    onKeyDown={(e) => e.key === "Enter" && handleSaveEdit(todo.id)}
                     className="bg-white/80 border-blue-00"
                     autoFocus
                   />
-                  <Button size="icon" variant="ghost" onClick={() => saveEdit(todo.id)} className="shrink-0">
+                  <Button size="icon" variant="ghost" onClick={() => handleSaveEdit(todo.id)} className="shrink-0">
                     <Check className="w-4 h-4 text-blue-900" />
                   </Button>
                   <Button size="icon" variant="ghost" onClick={cancelEdit} className="shrink-0">
@@ -124,7 +86,10 @@ export function TodoList() {
                   <Button
                     size="icon"
                     variant="ghost"
-                    onClick={() => startEdit(todo)}
+                    onClick={() => {
+                      setEditingId(todo.id)
+                      setEditText(todo.text)
+                    }}
                     className="opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
                   >
                     <Pencil className="w-4 h-4 text-blue-900" />
