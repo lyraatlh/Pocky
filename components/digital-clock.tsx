@@ -18,14 +18,14 @@ export function DigitalClock() {
   const days = ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"]
 
   return (
-    <Card className="p-8 bg-white/60 backdrop-blur-sm border-1 border-blue-200">
+    <Card className="p-8 bg-white/60 backdrop-blur-sm dark:bg-[#002855] border-1 border-blue-200 dark:border-[#002855]">
       <div className="flex items-center justify-between">
-        <div className="text-8xl font-bold text-blue-300 tracking-tight">
+        <div className="text-8xl font-bold text-blue-300 dark:text-white tracking-tight">
           {String(displayHours).padStart(2, "0")}.{String(minutes).padStart(2, "0")}
         </div>
         <div className="text-right">
-          <div className="text-xl font-semibold text-blue-300">{ampm}</div>
-          <div className="text-sm font-medium text-blue-300 mt-2">{days[time.getDay()]}</div>
+          <div className="text-xl font-semibold text-blue-300 dark:text-white">{ampm}</div>
+          <div className="text-sm font-medium text-blue-300 dark:text-white mt-2">{days[time.getDay()]}</div>
         </div>
       </div>
     </Card>

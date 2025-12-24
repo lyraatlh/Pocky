@@ -83,7 +83,7 @@ interface WeatherData {
 
     if (loading) {
         return (
-        <Card className="p-6 bg-gradient-to-br from-blue-200 to-blue-100 border-1 border-blue-200">
+        <Card className="p-6 bg-[#e8f2ff] dark:bg-gradient-to-br from-[#002855] to-[#001845] border-1 border-blue-200 dark:border-[#002855]">
             <div className="flex items-center justify-center py-8">
             <Loader2 className="h-8 w-8 animate-spin text-primary" />
             </div>
@@ -93,36 +93,36 @@ interface WeatherData {
 
     if (error || !weather) {
         return (
-        <Card className="p-6 bg-gradient-to-br from-blue-200 to-blue-100 border-1 border-blue-200">
+        <Card className="p-6 bg-[#e8f2ff] dark:bg-gradient-to-br from-[#002855] to-[#001845] border-1 border-blue-200 dark:border-[#002855]">
             <div className="text-center text-muted-foreground">
-            <Cloud className="h-12 w-12 mx-auto mb-2 opacity-50" />
-            <p className="text-sm">{error || "Weather unavailable"}</p>
+            <Cloud className="h-12 w-12 mx-auto mb-2 opacity-50 dark:text-white" />
+            <p className="text-sm dark:text-gray-400">{error || "Weather unavailable"}</p>
             </div>
         </Card>
         )
     }
 
     return (
-        <Card className="p-6 bg-gradient-to-br from-blue-200 to-blue-100 border-1 border-blue-200">
+        <Card className="p-6 bg-[#e8f2ff] dark:bg-gradient-to-br from-[#002855] to-[#001845] border-1 border-blue-200 dark:border-[#002855]">
         <div className="flex items-center justify-between">
             <div className="flex-1">
-            <div className="text-lg font-semibold text-blue-900 mb-1">{weather.location}</div>
-            <div className="text-5xl font-regular text-blue-900 mb-1">{weather.temp}°C</div>
-            <div className="text-lg text-blue-900">{weather.condition}</div>
+            <div className="text-lg font-semibold text-blue-900 dark:text-white mb-1">{weather.location}</div>
+            <div className="text-5xl font-regular text-blue-900 dark:text-white mb-1">{weather.temp}°C</div>
+            <div className="text-lg text-blue-900 dark:text-white">{weather.condition}</div>
             </div>
             <div className="flex flex-col items-center">{getWeatherIcon(weather.condition)}</div>
         </div>
 
-        <div className="mt-4 flex gap-4 pt-4 border-t border-blue-300">
+        <div className="mt-4 flex gap-4 pt-4 border-t border-blue-300 dark:border-white">
             <div className="flex items-center gap-2 flex-1">
-            <Droplets className="h-5 w-5 text-blue-900" />
+            <Droplets className="h-5 w-5 text-blue-900 dark:text-white" />
             <div>
                 <div className="text-xs text-foreground">Humidity</div>
                 <div className="font-semibold">{weather.humidity}%</div>
             </div>
             </div>
             <div className="flex items-center gap-2 flex-1">
-            <Wind className="h-5 w-5 text-blue-900" />
+            <Wind className="h-5 w-5 text-blue-900 dark:text-white" />
             <div>
                 <div className="text-xs text-foreground">Wind</div>
                 <div className="font-semibold">{weather.windSpeed} km/h</div>

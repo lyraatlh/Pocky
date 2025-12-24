@@ -92,7 +92,7 @@ export function ReminderCard() {
           onKeyDown={(e) => e.key === "Enter" && handleAddReminder()}
           className="placeholder:text-gray-300 bg-white/80 border-blue-200"
         />
-        <Button onClick={handleAddReminder} size="icon" className="shrink-0">
+        <Button onClick={handleAddReminder} size="icon" className="bg-blue-300 hover:bg-blue-200 text-blue-100">
           <Plus className="w-4 h-4" />
         </Button>
       </div>

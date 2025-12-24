@@ -24,36 +24,36 @@ interface TransactionSummaryProps {
 
     return (
         <div className="space-y-4">
-        <Card className="bg-gradient-to-br from-blue-100 to-blue-50 border-blue-200 shadow-lg">
+        <Card className="bg-blue-50 dark:bg-[#002855] border-blue-200 border-1 dark:border-[#002855]">
             <CardHeader>
-            <CardTitle className="text-blue-900">Financial Summary</CardTitle>
+            <CardTitle className="text-xl text-bold text-blue-900 dark:text-white">Financial Summary</CardTitle>
             </CardHeader>
             <CardContent>
             <div className="space-y-3">
                 <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                    <TrendingUp className="h-5 w-5 text-blue-900" />
-                    <span className="text-sm font-medium text-blue-900">Total Income</span>
+                    <TrendingUp className="h-5 w-5 text-blue-900 dark:text-white" />
+                    <span className="text-sm font-medium text-blue-900 dark:text-white">Total Income</span>
                 </div>
-                <span className="font-bold text-blue-900">{formatCurrency(income)}</span>
+                <span className="font-bold text-blue-900 dark:text-white">{formatCurrency(income)}</span>
                 </div>
                 <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                    <TrendingDown className="h-5 w-5 text-blue-900" />
-                    <span className="text-sm font-medium text-blue-900">Total Expense</span>
+                    <TrendingDown className="h-5 w-5 text-blue-900 dark:text-white" />
+                    <span className="text-sm font-medium text-blue-900 dark:text-white">Total Expense</span>
                 </div>
-                <span className="font-bold text-blue-900">{formatCurrency(expense)}</span>
+                <span className="font-bold text-blue-900 dark:text-white">{formatCurrency(expense)}</span>
                 </div>
                 <div className="border-t-2 border-blue-200 pt-3 flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                    <Wallet className="h-5 w-5 text-blue-900" />
-                    <span className="text-sm font-medium text-blue-900">Balance</span>
+                    <Wallet className="h-5 w-5 text-blue-900 dark:text-white" />
+                    <span className="text-sm font-medium text-blue-900 dark:text-white">Balance</span>
                 </div>
-                <span className={`font-bold ${balance >= 0 ? "text-blue-900" : "text-blue-900"}`}>
+                <span className={`font-bold ${balance >= 0 ? "text-blue-900 dark:text-white" : "text-blue-900 dark:text-white"}`}>
                     {formatCurrency(balance)}
                 </span>
                 </div>
-                <p className="text-xs text-muted-foreground mt-2">Total Transactions: {transactions.length}</p>
+                <p className="text-xs text-muted-foreground dark:text-gray-400 mt-2">Total Transactions: {transactions.length}</p>
             </div>
             </CardContent>
         </Card>

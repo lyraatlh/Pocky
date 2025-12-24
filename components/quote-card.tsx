@@ -141,14 +141,14 @@ export function QuoteCard() {
             autoFocus
           />
           <div className="flex gap-2">
-            <Button onClick={updateQuote} className="flex-1">
+            <Button onClick={updateQuote} className=" flex-1 text-gray-700 dark:text-white bg-blue-200 dark:bg-blue-900 hover:text-gray-800 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-blue-800 border-1 border-blue-200 dark:border-blue-900">
               <Check className="w-4 h-4 mr-2" />
               Save
             </Button>
-            <Button onClick={deleteQuote} variant="destructive" className="flex-1">
+            <Button onClick={deleteQuote} variant="destructive" className="flex-1 text-gray-700 dark:text-white bg-blue-200 dark:bg-blue-900 hover:text-gray-800 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-blue-800 border-1 border-blue-200 dark:border-blue-900">
               Delete
             </Button>
-            <Button onClick={cancel} variant="outline" className="flex-1 bg-transparent">
+            <Button onClick={cancel} variant="outline" className="flex-1 text-gray-700 dark:text-white bg-blue-200 dark:bg-blue-900 hover:text-gray-800 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-blue-800 border-1 border-blue-200 dark:border-blue-900 bg-transparent">
               <X className="w-4 h-4 mr-2" />
               Cancel
             </Button>

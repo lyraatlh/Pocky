@@ -43,24 +43,24 @@ export function CalendarWidget() {
   }
 
   return (
-    <Card className="p-6 bg-white/60 backdrop-blur-sm border-1 border-blue-200">
+    <Card className="p-6 bg-white/60 backdrop-blur-sm dark:bg-[#002855] border-1 border-blue-200 dark:border-[#002855]">
       <div className="flex items-center justify-between mb-4">
-        <Button variant="ghost" size="icon" onClick={previousMonth} className="text-blue-400 hover:text-blue-600">
+        <Button variant="ghost" size="icon" onClick={previousMonth} className="text-blue-400 dark:text-white hover:text-white hover:bg-blue-300 dark:hover:bg-[#33415C]">
           <ChevronLeft className="w-5 h-5" />
         </Button>
 
-        <h3 className="font-bold text-blue-900">
+        <h3 className="font-bold text-blue-900 dark:text-white">
           {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
         </h3>
 
-        <Button variant="ghost" size="icon" onClick={nextMonth} className="text-blue-400 hover:text-blue-900">
+        <Button variant="ghost" size="icon" onClick={nextMonth} className="text-blue-400 dark:text-white hover:text-blue-100 hover:bg-blue-300 dark:hover:bg-[#33415C]">
           <ChevronRight className="w-5 h-5" />
         </Button>
       </div>
 
       <div className="grid grid-cols-7 gap-2 text-center">
         {["S", "M", "T", "W", "T", "F", "S"].map((day, i) => (
-          <div key={i} className="text-xs font-bold text-blue-300 mb-2">
+          <div key={i} className="text-xs font-bold text-blue-300 mb-2 dark:text-white">
             {day}
           </div>
         ))}
@@ -80,7 +80,7 @@ export function CalendarWidget() {
             <button
               key={day}
               className={`aspect-square rounded-lg text-sm transition-colors ${
-                isToday ? "bg-blue-200 text-white font-bold" : "text-blue-300 hover:bg-blue-100"
+                isToday ? "bg-blue-200 dark:bg-[#5C677D] text-white font-bold dark:text-blue-100 dark:hover:bg-[#7D8597]" : "text-blue-300 hover:bg-blue-100 dark:text-blue-100 dark:hover:bg-[#7D8597]"
               }`}
             >
               {day}

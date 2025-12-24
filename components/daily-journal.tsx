@@ -213,11 +213,11 @@ import {
 
     return (
         <>
-        <Card className="p-6 bg-gradient-to-br from-blue-100 via-blue-100 to-blue-50 border-1 border-blue-200">
+        <Card className="p-6 bg-blue-100 dark:bg-[#002855] border-1 border-blue-200 dark:border-[#002855]">
             <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-                <BookOpen className="h-6 w-6 text-blue-900" />
-                <h3 className="text-xl font-bold text-blue-900">Daily Journal</h3>
+                <BookOpen className="h-6 w-6 text-blue-900 dark:text-white" />
+                <h3 className="text-xl font-bold text-blue-900 dark:text-white">Daily Journal</h3>
             </div>
             <Badge className="bg-blue-900 text-blue-100 hover:bg-blue-800">
                 {entries.length} {entries.length === 1 ? "entry" : "entries"}
@@ -226,11 +226,11 @@ import {
 
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="grid w-full grid-cols-2 bg-blue-200/50">
-                <TabsTrigger value="write" className="data-[state=active]:bg-blue-300 data-[state=active]:text-white">
+                <TabsTrigger value="write" className="data-[state=active]:bg-[#8ec5ff] dark:data-[state=active]:bg-[#002855] data-[state=active]:text-white">
                 <Edit2 className="h-4 w-4 mr-2" />
                 Write
                 </TabsTrigger>
-                <TabsTrigger value="browse" className="data-[state=active]:bg-blue-300 data-[state=active]:text-white">
+                <TabsTrigger value="browse" className="data-[state=active]:bg-[#8ec5ff] dark:data-[state=active]:bg-[#002855] data-[state=active]:text-white">
                 <FileText className="h-4 w-4 mr-2" />
                 Browse
                 </TabsTrigger>
@@ -246,17 +246,17 @@ import {
                 </div>
                 )}
 
-                <div className="flex items-center justify-between bg-white p-3 rounded-lg border border-blue-200">
-                <Button onClick={goToPreviousDay} size="sm" variant="ghost" className="text-blue-900 hover:bg-blue-100">
+                <div className="flex items-center justify-between bg-white dark:bg-[#001845] p-3 rounded-lg border-2 border-blue-200 dark:border-[#33415C]">
+                <Button onClick={goToPreviousDay} size="sm" variant="ghost" className="text-blue-900 dark:text-white hover:bg-blue-100">
                     <ChevronLeft className="h-5 w-5" />
                 </Button>
                 <div className="text-center flex-1">
-                    <div className="font-semibold text-blue-900 flex items-center justify-center gap-2">
+                    <div className="font-semibold text-blue-900 dark:text-white flex items-center justify-center gap-2">
                     <Calendar className="h-4 w-4" />
                     {formatDate(currentDate)}
                     </div>
                     {!isToday && (
-                    <Button onClick={goToToday} size="sm" variant="link" className="text-xs text-blue-900">
+                    <Button onClick={goToToday} size="sm" variant="link" className="text-xs text-blue-900 dark:text-white hover:underline mt-1">
                         Back to today
                     </Button>
                     )}
@@ -276,14 +276,14 @@ import {
                 placeholder="Entry title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="border-blue-200 bg-white font-regular text-blue-900 placeholder:text-gray-300"
+                className="border-2 border-blue-200 dark:border-[#33415C] bg-white font-regular text-blue-900 dark:text-white placeholder:text-gray-300"
                 />
 
                 <Textarea
                 placeholder="What's on your mind today?"
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                className="resize-none border-blue-200 bg-white min-h-[200px] text-blue-900 placeholder:text-gray-300"
+                className="resize-none border-2 border-blue-200 dark:border-[#33415C] bg-white min-h-[200px] text-blue-900 dark:text-white placeholder:text-gray-300"
                 rows={8}
                 />
 
@@ -298,7 +298,7 @@ import {
                     value={tagInput}
                     onChange={(e) => setTagInput(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addTag())}
-                    className="border-blue-200 bg-white text-blue-900 placeholder:text-gray-400"
+                    className="border-2 border-blue-200 dark:border-[#33415C] bg-white text-blue-900 placeholder:text-gray-400"
                     />
                     <Button onClick={addTag} size="sm" className="bg-blue-300 hover:bg-blue-200 text-blue-100">
                     <Plus className="h-4 w-4" />
@@ -348,19 +348,19 @@ import {
             <TabsContent value="browse" className="space-y-4 mt-4">
                 <div className="space-y-3">
                 <div className="relative">
-                    <Search className="absolute left-4 top-2.5 h-4 w-4 text-blue-900" />
+                    <Search className="absolute left-4 top-2.5 h-4 w-4 text-blue-900 dark:text-white" />
                     <Input
                     placeholder="Search entries"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10 border-blue-200 bg-white text-blue-900 placeholder:text-gray-300"
+                    className="pl-10 border-blue-200 dark:border-[#33415C] bg-white text-blue-900 dark:text-white placeholder:text-gray-300 dark:placeholder:text-gray-400"
                     />
                     {searchQuery && (
                     <Button
                         onClick={() => setSearchQuery("")}
                         size="sm"
                         variant="ghost"
-                        className="absolute right-1 top-1 text-blue-900 hover:bg-blue-100"
+                        className="absolute right-1 top-1 text-blue-900 dark:text-white hover:bg-blue-100"
                     >
                         <X className="h-4 w-4" />
                     </Button>
@@ -370,8 +370,8 @@ import {
                 {allTags.length > 0 && (
                     <div className="space-y-2">
                     <div className="flex items-center gap-2">
-                        <Tag className="h-4 w-4 text-blue-900" />
-                        <span className="text-sm font-medium text-blue-900">Filter by tag:</span>
+                        <Tag className="h-4 w-4 text-blue-900 dark:text-white" />
+                        <span className="text-sm font-medium text-blue-900 dark:text-white">Filter by tag:</span>
                     </div>
                     <div className="flex flex-wrap gap-2">
                         <Badge
@@ -402,11 +402,11 @@ import {
                 )}
                 </div>
 
-                <ScrollArea className="h-[400px] rounded-lg border-2 border-blue-200 bg-white/50">
+                <ScrollArea className="h-[400px] rounded-lg border-2 border-blue-200 dark:border-[#33415C] bg-white/50 dark:bg-[#001845]">
                 <div className="p-4 space-y-3">
                     {filteredEntries.length === 0 ? (
-                    <div className="text-center py-12 text-blue-700">
-                        <BookOpen className="h-12 w-12 mx-auto mb-3 opacity-50" />
+                    <div className="text-center py-12 text-blue-900/60 dark:text-white/60">
+                        <BookOpen className="h-12 w-12 mx-auto mb-3 opacity-50 dark:text-white" />
                         <p className="text-sm">No entries found</p>
                     </div>
                     ) : (
@@ -446,7 +446,7 @@ import {
                                 onClick={() => confirmDelete(entry.id)}
                                 size="sm"
                                 variant="ghost"
-                                className="text-red-500 hover:bg-red-50"
+                                className="text-red-500 hover:bg-red-200"
                             >
                                 <Trash2 className="h-4 w-4" />
                             </Button>
@@ -462,10 +462,10 @@ import {
         </Card>
 
         <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
-            <DialogContent className="bg-white border-blue-200">
+            <DialogContent className="bg-white dark:bg-[#002855] border-blue-200 dark:border-[#002855]">
             <DialogHeader>
-                <DialogTitle className="text-blue-900">Delete Journal Entry</DialogTitle>
-                <DialogDescription className="text-blue-700">
+                <DialogTitle className="text-blue-900 dark:text-white">Delete Journal Entry</DialogTitle>
+                <DialogDescription className="text-blue-900 dark:text-white">
                 Are you sure you want to delete this entry? This action cannot be undone.
                 </DialogDescription>
             </DialogHeader>
@@ -473,11 +473,11 @@ import {
                 <Button
                 variant="outline"
                 onClick={() => setIsDeleteDialogOpen(false)}
-                className="border-blue-200 text-blue-900"
+                className="text-gray-700 dark:text-white bg-blue-200 dark:bg-blue-900 hover:text-gray-800 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-blue-800 border-1 border-blue-200 dark:border-blue-900"
                 >
                 Cancel
                 </Button>
-                <Button variant="destructive" onClick={deleteEntry} className="bg-red-500 hover:bg-red-600">
+                <Button variant="destructive" onClick={deleteEntry} className="text-gray-700 dark:text-white bg-blue-50 dark:bg-blue-900 hover:text-gray-800 dark:hover:text-white hover:bg-blue-200 dark:hover:bg-blue-800 border-1 border-blue-200 dark:border-blue-900">
                 Delete
                 </Button>
             </DialogFooter>

@@ -79,7 +79,7 @@ interface BudgetPlannerProps {
             <Button
                 onClick={() => setIsAdding(!isAdding)}
                 size="sm"
-                className="bg-blue-900 hover:bg-blue-800 text-white gap-1"
+                className="text-gray-700 dark:text-white bg-blue-200 dark:bg-blue-900 hover:text-gray-800 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-blue-800 border-1 border-blue-200 dark:border-blue-900"
             >
                 <Plus className="h-4 w-4" />
                 Add Budget
@@ -107,7 +107,7 @@ interface BudgetPlannerProps {
                     step="10000"
                 />
                 <div className="flex gap-2">
-                    <Button onClick={addBudget} className="flex-1 bg-blue-900 hover:bg-blue-800 text-white">
+                    <Button onClick={addBudget} className="text-gray-700 dark:text-white bg-blue-200 dark:bg-blue-900 hover:text-gray-800 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-blue-800 border-1 border-blue-200 dark:border-blue-900">
                     Create Budget
                     </Button>
                     <Button
@@ -117,7 +117,7 @@ interface BudgetPlannerProps {
                         setNewLimit("")
                     }}
                     variant="outline"
-                    className="border-blue-200 hover:bg-blue-50"
+                    className="text-gray-700 dark:text-white bg-blue-50 dark:bg-blue-900 hover:text-gray-800 dark:hover:text-white hover:bg-blue-200 dark:hover:bg-blue-800 border-1 border-blue-200 dark:border-blue-900"
                     >
                     Cancel
                     </Button>
