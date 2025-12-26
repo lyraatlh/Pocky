@@ -2,12 +2,12 @@
 
 import type React from "react"
 
-import { useState, useEffect, useRef } from "react"
+import { useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Plus, Trash2, Check, Flame, Target, Search, Edit, Upload, LinkIcon, Filter, TrendingUp, ImageIcon } from "lucide-react"
+import { Plus, Trash2, Check, Flame, Target, Search, Edit, Upload, LinkIcon, Filter, ImageIcon } from "lucide-react"
 import {
     Dialog,
     DialogContent,
@@ -20,12 +20,14 @@ import {
     import { Badge } from "@/components/ui/badge"
     import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
     import type { Habit } from "@/types/habit"
+    import { useHabits } from "@/hooks/use-habits"
 
     const HABIT_ICONS = ["💪", "📚", "💧", "🏃", "🧘", "🎨", "🎵", "🌱", "🍎", "😴", "🎯", "✨"]
     const CATEGORIES = ["Health", "Fitness", "Learning", "Productivity", "Mindfulness", "Creativity", "Other"]
 
     export function HabitTracker() {
-    const [habits, setHabits] = useState<Habit[]>([])
+    const { habits, addHabit, updateHabit, deleteHabit, toggleHabitToday } = useHabits()
+
     const [searchQuery, setSearchQuery] = useState("")
     const [filterCategory, setFilterCategory] = useState<string>("all")
     const [isAdding, setIsAdding] = useState(false)
@@ -42,17 +44,6 @@ import {
     const [iconType, setIconType] = useState<"emoji" | "url" | "upload">("emoji")
     const [uploadedImage, setUploadedImage] = useState<string>("")
     const fileInputRef = useRef<HTMLInputElement>(null)
-
-    useEffect(() => {
-        const saved = localStorage.getItem("habits")
-        if (saved) {
-        setHabits(JSON.parse(saved))
-        }
-    }, [])
-
-    useEffect(() => {
-        localStorage.setItem("habits", JSON.stringify(habits))
-    }, [habits])
 
     const resetForm = () => {
         setFormName("")
@@ -78,10 +69,9 @@ import {
         }
     }
 
-    const addHabit = () => {
+    const handleAddHabit = () => {
         if (formName.trim()) {
-        const habit: Habit = {
-            id: Date.now().toString(),
+        addHabit({
             name: formName,
             icon: iconType === "emoji" ? selectedIcon : "",
             customIconUrl: iconType === "url" ? customIconUrl : iconType === "upload" ? uploadedImage : undefined,
@@ -92,29 +82,21 @@ import {
             completedDates: [],
             color: "bg-blue-200 border-blue-200",
             createdAt: new Date().toISOString(),
-        }
-        setHabits([...habits, habit])
+        })
         resetForm()
         }
     }
 
-    const updateHabit = () => {
+    const handleUpdateHabit = () => {
         if (editingHabit && formName.trim()) {
-        setHabits(
-            habits.map((h) =>
-            h.id === editingHabit.id
-                ? {
-                    ...h,
-                    name: formName,
-                    icon: iconType === "emoji" ? selectedIcon : "",
-                    customIconUrl: iconType === "url" ? customIconUrl : iconType === "upload" ? uploadedImage : undefined,
-                    description: formDescription,
-                    category: formCategory,
-                    goal: formGoal,
-                }
-                : h,
-            ),
-        )
+        updateHabit(editingHabit.id, {
+            name: formName,
+            icon: iconType === "emoji" ? selectedIcon : "",
+            customIconUrl: iconType === "url" ? customIconUrl : iconType === "upload" ? uploadedImage : undefined,
+            description: formDescription,
+            category: formCategory,
+            goal: formGoal,
+        })
         resetForm()
         }
     }
@@ -140,29 +122,12 @@ import {
         }
     }
 
-    const toggleHabitToday = (id: string) => {
-        const today = new Date().toISOString().split("T")[0]
-        setHabits(
-        habits.map((habit) => {
-            if (habit.id === id) {
-            const completedDates = [...habit.completedDates]
-            const index = completedDates.indexOf(today)
-
-            if (index > -1) {
-                completedDates.splice(index, 1)
-                return { ...habit, completedDates, streak: Math.max(0, habit.streak - 1) }
-            } else {
-                completedDates.push(today)
-                return { ...habit, completedDates, streak: habit.streak + 1 }
-            }
-            }
-            return habit
-        }),
-        )
+    const handleToggleHabitToday = (id: string) => {
+        toggleHabitToday(id)
     }
 
-    const deleteHabit = (id: string) => {
-        setHabits(habits.filter((h) => h.id !== id))
+    const handleDeleteHabit = (id: string) => {
+        deleteHabit(id)
         setDeleteConfirm(null)
     }
 
@@ -188,7 +153,7 @@ import {
             <img
             src={habit.customIconUrl || "/placeholder.svg"}
             alt={habit.name}
-            className="w-12 h-12 rounded-lg object-cover border-2 border-blue-200 dark:border-blue-900"
+            className="w-12 h-12 rounded-lg object-cover border-1 border-blue-200 dark:border-[#002855]"
             />
         )
         }
@@ -196,14 +161,14 @@ import {
     }
 
     return (
-        <Card className="p-6 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950/30 dark:to-blue-900/40 border-1 border-blue-200 dark:border-blue-900">
+        <Card className="p-6 bg-blue-50 dark:bg-[#002855] border-1 border-blue-200 dark:border-[#002855]">
         <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
             <div className="p-2 bg-blue-200 dark:bg-blue-900 rounded-lg">
                 <Target className="h-6 w-6 text-blue-900 dark:text-blue-200" />
             </div>
             <div>
-                <h3 className="text-2xl font-bold text-blue-900 dark:text-blue-100">Habit Tracker</h3>
+                <h3 className="text-2xl font-bold text-blue-900 dark:text-white">Habit Tracker</h3>
                 <p className="text-sm text-blue-900 dark:text-blue-100">
                 {totalCompleted} of {habits.length} completed • {completionRate}% today
                 </p>
@@ -212,7 +177,8 @@ import {
             <Button
             onClick={() => setIsAdding(true)}
             size="sm"
-            className="text-gray-700 dark:text-white bg-blue-200 dark:bg-blue-900 hover:text-gray-800 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-blue-800 border-1 border-blue-200 dark:border-blue-900">
+            className="text-gray-700 dark:text-white bg-blue-200 dark:bg-[#023E7D] hover:text-gray-800 dark:hover:text-white hover:bg-blue-100 dark:hover:bg-[#002855] border-1 border-blue-200 dark:border-[#023E7D]"
+            >
             <Plus className="h-4 w-4" />
             Add Habit
             </Button>
@@ -221,18 +187,18 @@ import {
         {/* Search and Filter */}
         <div className="mb-6 space-y-3">
             <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-blue-900" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-blue-900 dark:text-white" />
             <Input
                 placeholder="Search habits"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 border-2 border-blue-200 dark:border-blue-800 focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 rounded-lg bg-white dark:bg-blue-950"
+                className="pl-10 border-1 border-blue-200 dark:border-[#002855] focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 rounded-lg bg-white dark:bg-[#001845]"
             />
             </div>
             <div className="flex gap-2 items-center">
-            <Filter className="h-4 w-4 text-blue-300 dark:text-blue-700" />
+            <Filter className="h-4 w-4 text-blue-300 dark:text-white" />
             <Select value={filterCategory} onValueChange={setFilterCategory}>
-                <SelectTrigger className="w-48 border-2 border-blue-200 dark:border-blue-800 bg-white dark:bg-blue-950">
+                <SelectTrigger className="w-48 border-1 border-blue-200 dark:border-[#002855] bg-white dark:bg-[#001845]">
                 <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -248,104 +214,72 @@ import {
         </div>
 
         {/* Habits List */}
-        <div className="space-y-3 max-h-96 overflow-y-auto pr-2">
-            {filteredHabits.length === 0 ? (
-            <div className="text-center py-12 px-4">
-                <Target className="w-16 h-16 text-blue-300 dark:text-blue-300 mx-auto mb-4" />
-                <p className="text-blue-900 dark:text-blue-100 font-medium">
-                {searchQuery || filterCategory !== "all" ? "No habits found" : "No habits yet"}
-                </p>
-                <p className="text-sm text-blue-900 dark:text-blue-100">
-                {searchQuery || filterCategory !== "all"
-                    ? "Try adjusting your filters"
-                    : "Start building good habits today!"}
-                </p>
-            </div>
-            ) : (
-            filteredHabits.map((habit) => (
-                <div
+        {filteredHabits.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {filteredHabits.map((habit) => (
+                <Card
                 key={habit.id}
-                className={`p-4 rounded-xl border-2 transition-all duration-300 ${
-                    isCompletedToday(habit)
-                    ? "bg-blue-200 dark:bg-blue-900 border-blue-200 dark:border-blue-600 shadow-lg"
-                    : "bg-white dark:bg-blue-950 border-blue-200 dark:border-blue-800 hover:border-blue-200 dark:hover:border-blue-200"
-                }`}
+                className="p-4 bg-white dark:bg-[#001845] border-1 border-blue-100 dark:border-[#002855] hover:shadow-md transition-shadow"
                 >
-                <div className="flex items-start justify-between gap-3">
-                    <div className="flex items-start gap-3 flex-1">
-                    {renderHabitIcon(habit)}
-                    <div className="flex-1 min-w-0">
-                        <div className="font-semibold text-blue-900 dark:text-blue-100 flex items-center gap-2">
-                        {habit.name}
-                        {habit.category && (
-                            <Badge className="bg-blue-200 dark:bg-blue-900 text-blue-900 dark:text-blue-100 text-xs">
-                            {habit.category}
-                            </Badge>
-                        )}
-                        </div>
-                        {habit.description && (
-                        <p className="text-sm text-blue-700 dark:text-blue-300 mt-1">{habit.description}</p>
-                        )}
-                        <div className="flex items-center gap-3 mt-2">
-                        <div className="flex items-center gap-1 text-sm text-orange-600 dark:text-orange-400">
-                            <Flame className="h-4 w-4" />
-                            <span className="font-bold">{habit.streak}</span>
-                            <span className="text-xs">days</span>
-                        </div>
-                        {habit.goal && (
-                            <div className="flex items-center gap-1 text-sm text-blue-600 dark:text-blue-400">
-                            <TrendingUp className="h-4 w-4" />
-                            <span className="text-xs">
-                                {habit.streak}/{habit.goal} goal
-                            </span>
-                            </div>
-                        )}
+                <div className="flex items-start justify-between mb-3">
+                    <div className="flex items-start gap-3">
+                    <div className="flex-shrink-0">{renderHabitIcon(habit)}</div>
+                    <div className="flex-grow">
+                        <h4 className="text-lg font-semibold text-gray-800 dark:text-white">{habit.name}</h4>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{habit.description}</p>
+                        <div className="flex gap-2 mt-2 flex-wrap">
+                        <Badge variant="secondary">{habit.category}</Badge>
+                        <Badge variant="outline" className="flex items-center gap-1">
+                            <Flame className="h-3 w-3 text-orange-500" />
+                            {habit.streak}
+                        </Badge>
                         </div>
                     </div>
                     </div>
-                    <div className="flex gap-2">
-                    <Button
-                        onClick={() => toggleHabitToday(habit.id)}
-                        size="sm"
-                        className={
-                        isCompletedToday(habit)
-                            ? "bg-green-500 hover:bg-green-600 text-white shadow-lg rounded-lg"
-                            : "bg-white dark:bg-blue-900 hover:bg-blue-50 dark:hover:bg-blue-800 text-blue-900 dark:text-blue-100 border-2 border-blue-200 dark:border-blue-700 rounded-lg"
-                        }
-                    >
-                        <Check className="h-4 w-4" />
-                    </Button>
-                    <Button
-                        onClick={() => openEditDialog(habit)}
-                        size="sm"
-                        variant="ghost"
-                        className="text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900 rounded-lg"
-                    >
+                    <div className="flex gap-1">
+                    <Button variant="ghost" size="sm" onClick={() => openEditDialog(habit)} className="h-8 w-8 p-0">
                         <Edit className="h-4 w-4" />
                     </Button>
                     <Button
-                        onClick={() => setDeleteConfirm(habit.id)}
-                        size="sm"
                         variant="ghost"
-                        className="text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950 rounded-lg"
+                        size="sm"
+                        onClick={() => setDeleteConfirm(habit.id)}
+                        className="h-8 w-8 p-0 text-red-500 hover:text-red-700"
                     >
                         <Trash2 className="h-4 w-4" />
                     </Button>
                     </div>
                 </div>
-                </div>
-            ))
-            )}
-        </div>
+
+                <Button
+                    onClick={() => handleToggleHabitToday(habit.id)}
+                    className={`w-full ${
+                    isCompletedToday(habit)
+                        ? "bg-blue-300 dark:bg-[#023E7D] hover:bg-blue-300/50 dark:hover:bg-[#023E7D]/50 text-white"
+                        : "bg-blue-100 dark:bg-[#001233] text-gray-800 dark:text-gray-200 hover:bg-blue-200 dark:hover:bg-[#002855]"
+                    }`}
+                >
+                    <Check className="h-4 w-4 mr-2" />
+                    {isCompletedToday(habit) ? "Completed Today" : "Mark Complete Today"}
+                </Button>
+                </Card>
+            ))}
+            </div>
+        ) : (
+            <div className="text-center py-12">
+            <Target className="h-12 w-12 text-blue-300 mx-auto mb-4" />
+            <p className="text-gray-500 dark:text-gray-400">No habits found. Start by adding your first habit!</p>
+            </div>
+        )}
 
         {/* Add/Edit Dialog */}
         <Dialog open={isAdding || editingHabit !== null} onOpenChange={(open) => !open && resetForm()}>
-            <DialogContent className="max-w-2xl bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900 border-1 border-blue-300 dark:border-blue-900">
+            <DialogContent className="max-w-2xl bg-blue-100 dark:bg-[#001845] border-1 border-blue-300 dark:border-[#002855]">
             <DialogHeader>
-                <DialogTitle className="text-2xl font-bold text-blue-900 dark:text-blue-100">
+                <DialogTitle className="text-2xl font-bold text-blue-900 dark:text-white">
                 {editingHabit ? "Edit Habit" : "Create New Habit"}
                 </DialogTitle>
-                <DialogDescription className="text-blue-900 dark:text-blue-100">
+                <DialogDescription className="text-blue-900 dark:text-white">
                 {editingHabit ? "Update your habit details" : "Set up a new habit to track"}
                 </DialogDescription>
             </DialogHeader>
@@ -353,20 +287,28 @@ import {
             <div className="space-y-4">
                 {/* Icon Selection */}
                 <div>
-                <label className="text-sm font-medium text-blue-900 dark:text-blue-100 mb-2 block">
+                <label className="text-sm font-medium text-blue-900 dark:text-white mb-2 block">
                     Choose Icon Type
                 </label>
                 <Tabs value={iconType} onValueChange={(v) => setIconType(v as typeof iconType)}>
-                    <TabsList className="grid w-full grid-cols-3 bg-blue-200 dark:bg-blue-900">
-                    <TabsTrigger value="emoji" className="data-[state=active]:bg-blue-300 data-[state=active]:text-white">
-                        Emoji</TabsTrigger>
-                    <TabsTrigger value="url" className="data-[state=active]:bg-blue-300 data-[state=active]:text-white">
-                        <LinkIcon className="w-4 h-4 mr-1" />URL</TabsTrigger>
-                    <TabsTrigger value="upload" className="data-[state=active]:bg-blue-300 data-[state=active]:text-white">
-                        <Upload className="w-4 h-4 mr-1" />Upload</TabsTrigger>
+                    <TabsList className="w-full grid-cols-2 bg-blue-200/50">
+                    <TabsTrigger value="emoji" className="data-[state=active]:bg-[#8ec5ff] dark:data-[state=active]:bg-[#002855] data-[state=active]:text-white">
+                        Emoji
+                    </TabsTrigger>
+                    <TabsTrigger value="url" className="data-[state=active]:bg-[#8ec5ff] dark:data-[state=active]:bg-[#002855] data-[state=active]:text-white">
+                        <LinkIcon className="w-4 h-4 mr-1" />
+                        URL
+                    </TabsTrigger>
+                    <TabsTrigger
+                        value="upload"
+                        className="data-[state=active]:bg-[#8ec5ff] dark:data-[state=active]:bg-[#002855] data-[state=active]:text-white"
+                    >
+                        <Upload className="w-4 h-4 mr-1" />
+                        Upload
+                    </TabsTrigger>
                     </TabsList>
                     <TabsContent value="emoji" className="mt-3">
-                    <div className="flex gap-2 flex-wrap p-3 bg-white dark:bg-gray-900 rounded-lg border-2 border-blue-200 dark:border-blue-900">
+                    <div className="flex gap-2 flex-wrap p-3 bg-white dark:bg-[#162556] rounded-lg border-1 border-blue-200 dark:border-[#002855]">
                         {HABIT_ICONS.map((icon) => (
                         <button
                             key={icon}
@@ -374,8 +316,8 @@ import {
                             onClick={() => setSelectedIcon(icon)}
                             className={`text-2xl p-3 rounded-lg transition-all ${
                             selectedIcon === icon
-                                ? "bg-blue-200 dark:bg-blue-900 scale-110 shadow-lg ring-2 ring-blue-200 dark:ring-blue-900"
-                                : "bg-gray-100 dark:bg-gray-800 hover:bg-blue-100 dark:hover:bg-blue-900 hover:scale-105"
+                                ? "bg-blue-200 dark:bg-[#001233] scale-110 shadow-lg ring-2 ring-blue-200 dark:ring-[#001233]"
+                                : "bg-gray-100 dark:bg-[#001845] hover:bg-blue-100 dark:hover:bg-[#001233] hover:scale-105"
                             }`}
                         >
                             {icon}
@@ -384,19 +326,19 @@ import {
                     </div>
                     </TabsContent>
                     <TabsContent value="url" className="mt-3">
-                    <div className="space-y-2">
+                    <div className="space-y-4">
                         <div className="relative">
-                        <LinkIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-blue-400" />
+                        <LinkIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-blue-400 dark:text-white" />
                         <Input
                             placeholder="https://example.com/image.png or .gif"
                             value={customIconUrl}
                             onChange={(e) => setCustomIconUrl(e.target.value)}
-                            className="pl-10 border-2 border-blue-200 dark:border-blue-900 bg-white dark:bg-blue-950"
+                            className="pl-10 border-1 border-blue-200 dark:border-[#002855] bg-white dark:bg-blue-950"
                         />
                         </div>
                         {customIconUrl && (
-                        <div className="p-3 bg-white dark:bg-blue-950 rounded-lg border-2 border-blue-200 dark:border-blue-800">
-                            <p className="text-xs text-blue-700 dark:text-blue-300 mb-2">Preview:</p>
+                        <div className="p-3 bg-white dark:bg-blue-950 rounded-lg border-1 border-blue-200 dark:border-[#002855]">
+                            <p className="text-xs text-blue-700 dark:text-white mb-2">Preview:</p>
                             <img
                             src={customIconUrl || "/placeholder.svg"}
                             alt="Preview"
@@ -407,7 +349,7 @@ import {
                     </div>
                     </TabsContent>
                     <TabsContent value="upload" className="mt-3">
-                    <div className="space-y-2">
+                    <div className="space-y-4">
                         <div className="flex items-center gap-2">
                         <Input
                             ref={fileInputRef}
@@ -417,10 +359,10 @@ import {
                             className="hidden"
                         />
                         <Button
-                        type="button"
-                        variant="outline"
-                        onClick={() => fileInputRef.current?.click()}
-                        className="w-full text-gray-700 dark:text-white bg-blue-200 dark:bg-blue-900 hover:text-gray-800 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-blue-800 border-1 border-blue-200 dark:border-blue-900"
+                            type="button"
+                            variant="outline"
+                            onClick={() => fileInputRef.current?.click()}
+                            className="w-full text-gray-700 dark:text-white bg-blue-200 dark:bg-[#023E7D] hover:text-gray-800 dark:hover:text-white hover:bg-blue-100 dark:hover:bg-[#002855] border-1 border-blue-200 dark:border-[#023E7D]"
                         >
                             <ImageIcon className="w-4 h-4 mr-2" />
                             Choose Image or GIF
@@ -428,8 +370,8 @@ import {
                         <Upload className="h-5 w-5 text-blue-400" />
                         </div>
                         {uploadedImage && (
-                        <div className="p-3 bg-white dark:bg-blue-950 rounded-lg border-1 border-blue-200 dark:border-blue-800">
-                            <p className="text-xs text-blue-900 dark:text-blue-300 mb-2">Preview:</p>
+                        <div className="p-3 bg-white dark:bg-blue-950 rounded-lg border-1 border-blue-200 dark:border-[#002855]">
+                            <p className="text-xs text-blue-900 dark:text-white mb-2">Preview:</p>
                             <img
                             src={uploadedImage || "/placeholder.svg"}
                             alt="Preview"
@@ -449,7 +391,7 @@ import {
                     placeholder="Morning Exercise"
                     value={formName}
                     onChange={(e) => setFormName(e.target.value)}
-                    className="border-2 border-blue-200 dark:border-blue-800 bg-white dark:bg-blue-950"
+                    className="border-1 border-blue-200 dark:border-[#002855] bg-white dark:bg-blue-950"
                 />
                 </div>
 
@@ -462,7 +404,7 @@ import {
                     placeholder="What does this habit mean to you?"
                     value={formDescription}
                     onChange={(e) => setFormDescription(e.target.value)}
-                    className="border-2 border-blue-200 dark:border-blue-800 bg-white dark:bg-blue-950 resize-none"
+                    className="border-1 border-blue-200 dark:border-[#002855] bg-white dark:bg-blue-950 resize-none"
                     rows={3}
                 />
                 </div>
@@ -472,7 +414,7 @@ import {
                 <div>
                     <label className="text-sm font-medium text-blue-900 dark:text-blue-100 mb-2 block">Category</label>
                     <Select value={formCategory} onValueChange={setFormCategory}>
-                    <SelectTrigger className="border-2 border-blue-200 dark:border-blue-800 bg-white dark:bg-blue-950">
+                    <SelectTrigger className="border-1 border-blue-200 dark:border-[#002855] bg-white dark:bg-blue-950">
                         <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -491,7 +433,7 @@ import {
                     min="1"
                     value={formGoal}
                     onChange={(e) => setFormGoal(Number(e.target.value))}
-                    className="border-2 border-blue-200 dark:border-blue-800 bg-white dark:bg-blue-950"
+                    className="border-1 border-blue-200 dark:border-[#002855] bg-white dark:bg-blue-950"
                     />
                 </div>
                 </div>
@@ -501,12 +443,13 @@ import {
                 <Button
                 variant="outline"
                 onClick={resetForm}
-                className="text-gray-700 dark:text-white bg-blue-200 dark:bg-blue-900 hover:text-gray-800 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-blue-800 border-1 border-blue-200 dark:border-blue-900">
+                className="text-gray-700 dark:text-white bg-blue-100 dark:bg-[#002855] hover:text-gray-800 dark:hover:text-white hover:bg-blue-200 dark:hover:bg-[#023E7D] border-1 border-blue-200 dark:border-[#023E7D]"
+                >
                 Cancel
                 </Button>
                 <Button
-                onClick={editingHabit ? updateHabit : addHabit}
-                className="text-gray-700 dark:text-white bg-blue-200 dark:bg-blue-900 hover:text-gray-800 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-blue-800 border-1 border-blue-200 dark:border-blue-900"
+                onClick={editingHabit ? handleUpdateHabit : handleAddHabit}
+                className="text-gray-700 dark:text-white bg-blue-200 dark:bg-[#023E7D] hover:text-gray-800 dark:hover:text-white hover:bg-blue-100 dark:hover:bg-[#002855] border-1 border-blue-200 dark:border-[#023E7D]"
                 >
                 {editingHabit ? "Update Habit" : "Create Habit"}
                 </Button>
@@ -516,24 +459,25 @@ import {
 
         {/* Delete Confirmation Dialog */}
         <Dialog open={deleteConfirm !== null} onOpenChange={(open) => !open && setDeleteConfirm(null)}>
-            <DialogContent className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900 border-1 border-blue-200 dark:border-blue-700">
+            <DialogContent className="bg-blue-50 dark:bg-[#001845] border-1 border-blue-200 dark:border-[#002855]">
             <DialogHeader>
-                <DialogTitle className="text-xl font-bold text-blue-900 dark:text-blue-100">Delete Habit</DialogTitle>
-                <DialogDescription className="text-blue-700 dark:text-blue-300">
-                Are you sure? This will permanently delete this habit and all its progress.
+                <DialogTitle className="text-xl font-bold text-blue-900 dark:text-white">Delete Habit?</DialogTitle>
+                <DialogDescription className="text-blue-900 dark:text-white">
+                Are you sure you want to delete this habit? This action cannot be undone.
                 </DialogDescription>
             </DialogHeader>
             <DialogFooter>
                 <Button
                 variant="outline"
                 onClick={() => setDeleteConfirm(null)}
-                className="border-2 border-blue-200 dark:border-blue-800"
+                className="text-gray-700 dark:text-white bg-blue-200 dark:bg-[#023E7D] hover:text-gray-800 dark:hover:text-white hover:bg-blue-100 dark:hover:bg-[#002855] border-1 border-blue-200 dark:border-[#023E7D]"
                 >
                 Cancel
                 </Button>
                 <Button
-                onClick={() => deleteConfirm && deleteHabit(deleteConfirm)}
-                className="bg-red-600 hover:bg-red-700 text-white"
+                variant="destructive"
+                onClick={() => handleDeleteHabit(deleteConfirm!)}
+                className="text-gray-700 dark:text-white bg-blue-100 dark:bg-[#002855] hover:text-gray-800 dark:hover:text-white hover:bg-blue-200 dark:hover:bg-[#023E7D] border-1 border-blue-200 dark:border-[#023E7D]"
                 >
                 Delete
                 </Button>

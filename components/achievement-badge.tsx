@@ -210,29 +210,29 @@ interface AchievementStats {
     return (
         <>
         {showNotification && newAchievement && (
-            <div className="fixed top-20 right-4 z-50 animate-in slide-in-from-right">
+            <div className="fixed top-20 right-4 z-100 animate-in slide-in-from-right">
             <Card className="p-4 bg-gradient-to-r from-blue-100 to-blue-200 dark:from-blue-900 dark:to-blue-800">
                 <div className="flex items-center gap-3">
                 <div className="text-4xl">{newAchievement.icon}</div>
                 <div>
-                    <div className="font-bold text-blue-900 dark:text-blue-100">Achievement Unlocked!</div>
-                    <div className="text-sm text-blue-900 dark:text-blue-200">{newAchievement.title}</div>
+                    <div className="font-bold text-blue-900 dark:text-white">Achievement Unlocked!</div>
+                    <div className="text-sm text-blue-900 dark:text-white">{newAchievement.title}</div>
                 </div>
-                <Trophy className="h-6 w-6 text-blue-900 dark:text-blue-900" />
+                <Trophy className="h-6 w-6 text-blue-900 dark:text-white" />
                 </div>
             </Card>
             </div>
         )}
 
-        <Card className="p-6 bg-gradient-to-br from-blue-100 to-blue-50 dark:from-blue-950/30 dark:to-blue-900/40 border-1 border-blue-200 dark:border-blue-800">
+        <Card className="p-6 bg-from-[#dbeafe] to-[#eff6ff] dark:bg-[#002855] border-1 border-blue-200 dark:border-[#002855]">
             <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
                 <div className="p-2 bg-blue-200 dark:bg-blue-900 rounded-lg">
                 <Trophy className="h-6 w-6 text-blue-900 dark:text-blue-200" />
                 </div>
                 <div>
-                <h3 className="text-2xl font-bold text-blue-900 dark:text-blue-100">Achievements</h3>
-                <p className="text-sm text-blue-900 dark:text-blue-300 flex items-center gap-1">
+                <h3 className="text-2xl font-bold text-blue-900 dark:text-white">Achievements</h3>
+                <p className="text-sm text-blue-900 dark:text-white flex items-center gap-1">
                     <Award className="w-3 h-3" />
                     {unlockedCount} of {achievements.length} unlocked
                 </p>
@@ -242,8 +242,8 @@ interface AchievementStats {
 
             <div className="mb-6">
             <div className="flex justify-between items-center mb-2">
-                <span className="text-sm font-medium text-blue-900 dark:text-blue-100">Overall Progress</span>
-                <span className="text-sm font-bold text-blue-900 dark:text-blue-100">{progressPercentage.toFixed(0)}%</span>
+                <span className="text-sm font-medium text-blue-900 dark:text-white">Overall Progress</span>
+                <span className="text-sm font-bold text-blue-900 dark:text-white">{progressPercentage.toFixed(0)}%</span>
             </div>
             <div className="w-full h-4 bg-blue-200 dark:bg-blue-900 rounded-full overflow-hidden shadow-inner">
                 <div

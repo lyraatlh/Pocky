@@ -206,24 +206,24 @@ import {
     const dominantMood = totalEntries > 0 ? Object.entries(moodCounts).sort(([, a], [, b]) => b - a)[0]?.[0] : null
 
     return (
-        <Card className="p-6 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950/30 dark:to-blue-900/40 border-1 border-blue-200 dark:border-blue-900">
+        <Card className="p-6 bg-blue-50 dark:bg-[#002855] border-1 border-blue-200 dark:border-[#002855]">
         <div className="flex items-center justify-between mb-6">
             <div>
-            <h3 className="text-2xl font-bold text-blue-900 dark:text-blue-100 mb-1">Mood Tracker</h3>
-            <p className="text-sm text-blue-900 dark:text-blue-300 flex items-center gap-2">
+            <h3 className="text-2xl font-bold text-blue-900 dark:text-white mb-1">Mood Tracker</h3>
+            <p className="text-sm text-blue-900 dark:text-white flex items-center gap-2">
                 <Calendar className="w-4 h-4" />
                 {totalEntries} {totalEntries === 1 ? "entry" : "entries"} logged
             </p>
             </div>
             {dominantMood && totalEntries > 3 && (
             <div className="text-right bg-white/50 dark:bg-blue-950/50 p-3 rounded-xl">
-                <p className="text-xs text-blue-900 dark:text-blue-400 mb-1 flex items-center gap-1 justify-end">
+                <p className="text-xs text-blue-900 dark:text-white mb-1 flex items-center gap-1 justify-end">
                 <TrendingUp className="w-3 h-3" />
                 Most common
                 </p>
                 <div className="flex items-center gap-2">
                 <span className="text-2xl">{allMoods.find((m) => m.value === dominantMood)?.emoji}</span>
-                <span className="text-sm font-medium text-blue-900 dark:text-blue-100">
+                <span className="text-sm font-medium text-blue-900 dark:text-white">
                     {allMoods.find((m) => m.value === dominantMood)?.label}
                 </span>
                 </div>
@@ -233,9 +233,9 @@ import {
 
         <div className="space-y-6">
             {/* Add/Edit Mood Form */}
-            <div className="bg-white/70 dark:bg-blue-900/50 p-5 rounded-xl space-y-4 border border-blue-200 dark:border-blue-700">
+            <div className="bg-white/70 dark:bg-[#001845] p-5 rounded-xl space-y-4 border border-blue-200 dark:border-[#002855]">
             <div className="flex items-center justify-between">
-                <p className="text-sm font-semibold text-blue-900 dark:text-blue-100">
+                <p className="text-sm font-semibold text-blue-900 dark:text-white">
                 {editingEntry ? "Edit Mood Entry" : "How are you feeling?"}
                 </p>
                 {editingEntry && (
@@ -246,23 +246,23 @@ import {
             </div>
 
             <div>
-                <Label className="text-xs text-blue-900 dark:text-blue-300 mb-2 block">Date</Label>
+                <Label className="text-xs text-blue-900 dark:text-white mb-2 block">Date</Label>
                 <Input
                 type="date"
                 value={selectedDate}
                 onChange={(e) => setSelectedDate(e.target.value)}
-                className="border-blue-300 dark:border-blue-600 bg-white dark:bg-blue-950 focus:ring-blue-500"
+                className="pl-5 border-1 border-blue-200 dark:border-[#002855] focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 rounded-lg bg-white dark:bg-[#001845]"
                 />
             </div>
 
             <div>
                 <div className="flex items-center justify-between mb-3">
-                <Label className="text-xs text-blue-900 dark:text-blue-300">Select Mood</Label>
+                <Label className="text-xs text-blue-900 dark:text-white">Select Mood</Label>
                 <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => setIsAddMoodDialogOpen(true)}
-                    className="text-gray-700 dark:text-white bg-blue-200 dark:bg-blue-900 hover:text-gray-800 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-blue-800 border-1 border-blue-200 dark:border-blue-900"
+                    className="text-gray-700 dark:text-white bg-blue-200 dark:bg-[#023E7D] hover:text-gray-800 dark:hover:text-white hover:bg-blue-100 dark:hover:bg-[#002855] border-1 border-blue-200 dark:border-[#023E7D]"
                 >
                     <Plus className="w-4 h-4 mr-1" />
                     Add Custom
@@ -286,7 +286,7 @@ import {
                     )}
                     <span
                         className={`text-xs font-medium text-center ${
-                        selectedMood === mood.value ? "text-white" : "text-blue-900 dark:text-blue-100"
+                        selectedMood === mood.value ? "text-white" : "text-blue-900 dark:text-white"
                         }`}
                     >
                         {mood.label}
@@ -297,12 +297,12 @@ import {
             </div>
 
             <div>
-                <Label className="text-xs text-blue-900 dark:text-blue-300 mb-2 block">Notes (optional)</Label>
+                <Label className="text-xs text-blue-900 dark:text-white mb-2 block">Notes (optional)</Label>
                 <Textarea
                 placeholder="What made you feel this way? Any thoughts to remember"
                 value={note}
                 onChange={(e) => setNote(e.target.value)}
-                className="placeholder:text-gray-300 resize-none border-blue-300 dark:border-blue-600 bg-white dark:bg-blue-950 focus:ring-blue-500 rounded-lg"
+                className="pl-4 border-1 border-blue-200 dark:border-[#002855] focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 rounded-lg bg-white dark:bg-[#001845]"
                 rows={3}
                 />
             </div>
@@ -310,7 +310,7 @@ import {
             <Button
                 onClick={saveMood}
                 disabled={!selectedMood}
-                className="w-full text-gray-700 dark:text-white bg-blue-200 dark:bg-blue-900 hover:text-gray-800 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-blue-800 border-1 border-blue-200 dark:border-blue-900"
+                className="w-full text-gray-700 dark:text-white bg-blue-200 dark:bg-[#023E7D] hover:text-gray-800 dark:hover:text-white hover:bg-blue-100 dark:hover:bg-[#002855] border-1 border-blue-200 dark:border-[#023E7D]"
             >
                 {editingEntry ? "Update Mood" : "Save Mood"}
             </Button>
@@ -318,23 +318,23 @@ import {
 
             {/* Search and Filter */}
             {moods.length > 0 && (
-            <div className="bg-white/70 dark:bg-blue-900/50 p-4 rounded-xl space-y-3 border border-blue-200 dark:border-blue-700">
+            <div className="bg-white/70 dark:bg-[#001845] p-4 rounded-xl space-y-3 border border-blue-200 dark:border-[#002855]">
                 <div className="flex gap-3">
                 <div className="flex-1 relative">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-blue-900" />
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-blue-900 dark:text-white" />
                     <Input
                     placeholder="Search by mood, notes, or date"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="placeholder:text-gray-300 pl-10 border-blue-300 dark:border-blue-600 bg-white dark:bg-blue-950 focus:ring-blue-500"
+                    className="pl-10 border-1 border-blue-200 dark:border-[#002855] focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 rounded-lg bg-white dark:bg-[#001845]"
                     />
                 </div>
                 <div className="relative min-w-[150px]">
-                    <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-blue-900" />
+                    <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-blue-900 dark:text-white" />
                     <select
                     value={filterMood}
                     onChange={(e) => setFilterMood(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2 rounded-lg border border-blue-300 dark:border-blue-600 bg-white dark:bg-blue-950 text-sm focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer"
+                    className="w-full pl-10 pr-4 py-2 rounded-lg border border-blue-200 dark:border-[#002855] bg-white dark:bg-blue-950 text-sm appearance-none cursor-pointer"
                     >
                     <option value="all">All Moods</option>
                     {allMoods.map((mood) => (
@@ -351,7 +351,7 @@ import {
             {/* Mood History */}
             {filteredEntries.length > 0 ? (
             <div className="space-y-3">
-                <p className="text-sm font-semibold text-blue-900 dark:text-blue-100">
+                <p className="text-sm font-semibold text-blue-900 dark:text-white">
                 Mood History ({filteredEntries.length})
                 </p>
                 <div className="space-y-2 max-h-[500px] overflow-y-auto pr-2">
@@ -360,7 +360,7 @@ import {
                     return (
                     <div
                         key={entry.id}
-                        className="bg-white/80 dark:bg-blue-900/60 p-4 rounded-xl border border-blue-200 dark:border-blue-700 hover:shadow-md transition-all"
+                        className="bg-white/80 dark:bg-blue-900/60 p-4 rounded-xl border border-blue-200 dark:border-[#002855] hover:shadow-md transition-all"
                     >
                         <div className="flex items-start justify-between gap-3">
                         <div className="flex items-start gap-3 flex-1">
@@ -377,7 +377,7 @@ import {
                             </div>
                             <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-1">
-                                <span className="font-semibold text-blue-900 dark:text-blue-100">{entry.moodLabel}</span>
+                                <span className="font-semibold text-blue-900 dark:text-white">{entry.moodLabel}</span>
                                 <span className="text-xs text-blue-900 dark:text-blue-400">
                                 {new Date(entry.date).toLocaleDateString("id-ID", {
                                     weekday: "short",
@@ -388,7 +388,7 @@ import {
                                 </span>
                             </div>
                             {entry.note && (
-                                <p className="text-sm text-blue-900 dark:text-blue-300 line-clamp-2">{entry.note}</p>
+                                <p className="text-sm text-blue-900 dark:text-white line-clamp-2">{entry.note}</p>
                             )}
                             </div>
                         </div>
@@ -425,8 +425,8 @@ import {
 
             {/* Statistics */}
             {moods.length > 0 && (
-            <div className="bg-white/70 dark:bg-blue-900/50 p-4 rounded-xl border border-blue-200 dark:border-blue-700">
-                <p className="text-sm font-semibold text-blue-900 dark:text-blue-100 mb-3">Mood Statistics</p>
+            <div className="bg-white/70 dark:bg-blue-900/50 p-4 rounded-xl border border-blue-200 dark:border-[#002855]">
+                <p className="text-sm font-semibold text-blue-900 dark:text-white mb-3">Mood Statistics</p>
                 <div className="space-y-2">
                 {Object.entries(moodCounts)
                     .sort(([, a], [, b]) => b - a)
@@ -445,7 +445,7 @@ import {
                             ) : (
                             <span className="text-lg">{mood?.emoji}</span>
                             )}
-                            <span className="text-sm text-blue-900 dark:text-blue-100">{mood?.label}</span>
+                            <span className="text-sm text-blue-900 dark:text-white">{mood?.label}</span>
                         </div>
                         <div className="flex-1 bg-blue-100 dark:bg-blue-950 rounded-full h-2">
                             <div
@@ -453,7 +453,7 @@ import {
                             style={{ width: `${percentage}%` }}
                             />
                         </div>
-                        <span className="text-xs text-blue-900 dark:text-blue-300 w-16 text-right">
+                        <span className="text-xs text-blue-900 dark:text-white w-16 text-right">
                             {count} ({percentage}%)
                         </span>
                         </div>
@@ -466,10 +466,10 @@ import {
 
         {/* Add Custom Mood Dialog */}
         <Dialog open={isAddMoodDialogOpen} onOpenChange={setIsAddMoodDialogOpen}>
-            <DialogContent className="bg-gradient-to-br from-blue-50 to-blue-50 dark:from-blue-950 dark:to-blue-950 border-blue-300 dark:border-blue-700">
+            <DialogContent className="bg-blue-50 dark:bg-[#001233] border-1 border-blue-200 dark:border-[#002855]">
             <DialogHeader>
-                <DialogTitle className="text-blue-900 dark:text-blue-100">Add Custom Mood</DialogTitle>
-                <DialogDescription className="text-blue-900 dark:text-blue-300">
+                <DialogTitle className="text-blue-900 dark:text-white">Add Custom Mood</DialogTitle>
+                <DialogDescription className="text-blue-900 dark:text-white">
                 Create a personalized mood with custom icon
                 </DialogDescription>
             </DialogHeader>
@@ -477,31 +477,31 @@ import {
             <div className="space-y-4">
                 <div>
                 <div className="flex items-center justify-between mb-2">    
-                <Label className="text-blue-900 dark:text-blue-100">Mood Name</Label>
+                <Label className="text-blue-900 dark:text-white">Mood Name</Label>
                 </div>
                 <Input
                     placeholder="Excited, Peaceful, Energetic"
                     value={newMoodLabel}
                     onChange={(e) => setNewMoodLabel(e.target.value)}
-                    className="placeholder:text-gray-300 border-blue-300 dark:border-blue-600 bg-white dark:bg-blue-950"
+                    className="pl-5 border-1 border-blue-200 dark:border-[#002855] focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 rounded-lg bg-white dark:bg-[#001845]"
                 />
                 </div>
 
                 <div>
-                <Label className="text-blue-900 dark:text-blue-100 mb-2 block">Icon</Label>
+                <Label className="text-blue-900 dark:text-white mb-2 block">Icon</Label>
                 <Tabs value={newMoodIconType} onValueChange={(v) => setNewMoodIconType(v as any)}>
-                    <TabsList className="grid w-full grid-cols-3 bg-blue-200 dark:bg-blue-800">
-                    <TabsTrigger value="emoji" className="data-[state=active]:bg-blue-300 data-[state=active]:text-white">
+                    <TabsList className="w-full grid-cols-2 bg-blue-200/50">
+                    <TabsTrigger value="emoji" className="data-[state=active]:bg-[#8ec5ff] dark:data-[state=active]:bg-[#002855] data-[state=active]:text-white">
                         <Smile className="w-4 h-4 mr-1" />
                         Emoji
                     </TabsTrigger>
-                    <TabsTrigger value="url" className="data-[state=active]:bg-blue-300 data-[state=active]:text-white">
+                    <TabsTrigger value="url" className="data-[state=active]:bg-[#8ec5ff] dark:data-[state=active]:bg-[#002855] data-[state=active]:text-white">
                         <LinkIcon className="w-4 h-4 mr-1" />
                         URL
                     </TabsTrigger>
                     <TabsTrigger
                         value="upload"
-                        className="data-[state=active]:bg-blue-300 data-[state=active]:text-white"
+                        className="data-[state=active]:bg-[#8ec5ff] dark:data-[state=active]:bg-[#002855] data-[state=active]:text-white"
                     >
                         <Upload className="w-4 h-4 mr-1" />
                         Upload
@@ -513,9 +513,9 @@ import {
                         placeholder="💙"
                         value={newMoodEmoji}
                         onChange={(e) => setNewMoodEmoji(e.target.value)}
-                        className="placeholder:text-gray-300 text-2xl text-center border-blue-300 dark:border-blue-600 bg-white dark:bg-blue-950"
+                        className="text-center border-1 border-blue-200 dark:border-[#002855] focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 rounded-lg bg-white dark:bg-[#001845]"
                     />
-                    <p className="text-xs text-blue-900 dark:text-blue-400 text-center">Paste any emoji you like</p>
+                    <p className="text-xs text-blue-900 dark:text-gray-400 text-center">Paste any emoji you like</p>
                     </TabsContent>
 
                     <TabsContent value="url" className="space-y-2">
@@ -523,7 +523,7 @@ import {
                         placeholder="https://example.com/image.png or .gif"
                         value={newMoodUrl}
                         onChange={(e) => setNewMoodUrl(e.target.value)}
-                        className="placeholder:text-gray-300 border-blue-300 dark:border-blue-600 bg-white dark:bg-blue-950"
+                        className="pl-5 border-1 border-blue-200 dark:border-[#002855] focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 rounded-lg bg-white dark:bg-[#001845]"
                     />
                     {newMoodUrl && (
                         <div className="flex justify-center p-2 bg-white dark:bg-blue-950 rounded-lg">
@@ -584,10 +584,10 @@ import {
 
         {/* Delete Confirmation Dialog */}
         <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
-            <DialogContent className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900 border-blue-200 dark:border-blue-700">
+            <DialogContent className="bg-blue-100 dark:bg-[#001233] border-1 border-blue-200 dark:border-[#002855]">
             <DialogHeader>
-                <DialogTitle className="text-blue-900 dark:text-blue-100">Delete Mood Entry</DialogTitle>
-                <DialogDescription className="text-blue-900 dark:text-blue-300">
+                <DialogTitle className="text-blue-900 dark:text-white">Delete Mood Entry</DialogTitle>
+                <DialogDescription className="text-blue-900 dark:text-white">
                 Are you sure you want to delete this mood entry? This action cannot be undone.
                 </DialogDescription>
             </DialogHeader>
@@ -595,11 +595,11 @@ import {
                 <Button
                 variant="outline"
                 onClick={() => setIsDeleteDialogOpen(false)}
-                className=" text-gray-700 dark:text-white bg-blue-200 dark:bg-blue-900 hover:text-gray-800 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-blue-800 border-1 border-blue-200 dark:border-blue-900"
+                className="text-gray-700 dark:text-white bg-blue-100 dark:bg-[#002855] hover:text-gray-800 dark:hover:text-white hover:bg-blue-200 dark:hover:bg-[#023E7D] border-1 border-blue-200 dark:border-[#023E7D]"
                 >
                 Cancel
                 </Button>
-                <Button onClick={confirmDelete} className="text-gray-700 dark:text-white bg-blue-50 dark:bg-blue-900 hover:text-gray-800 dark:hover:text-white hover:bg-blue-200 dark:hover:bg-blue-800 border-1 border-blue-200 dark:border-blue-900">
+                <Button onClick={confirmDelete} className="text-gray-700 dark:text-white bg-blue-200 dark:bg-[#023E7D] hover:text-gray-800 dark:hover:text-white hover:bg-blue-100 dark:hover:bg-[#002855] border-1 border-blue-200 dark:border-[#023E7D]">
                 Delete
                 </Button>
             </DialogFooter>

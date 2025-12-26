@@ -30,8 +30,8 @@ export function ReminderCard() {
   }
 
   return (
-    <Card className="p-6 bg-white/60 backdrop-blur-sm border-1 border-blue-200">
-      <h3 className="text-lg font-semibold text-blue-900 mb-2">Reminder</h3>
+    <Card className="p-6 bg-white/60 backdrop-blur-sm dark:bg-[#002855] border-1 border-blue-200 dark:border-[#002855]">
+      <h3 className="text-lg font-semibold text-blue-900 dark:text-white mb-2">Reminder</h3>
 
       <div className="space-y-3 mb-4">
         {reminders.map((reminder) => (
@@ -46,19 +46,19 @@ export function ReminderCard() {
                   value={editText}
                   onChange={(e) => setEditText(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSaveEdit(reminder.id)}
-                  className="bg-white/80 border-blue-200"
+                  className="pl-10 border-1 border-blue-200 dark:border-[#002855] focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 rounded-lg bg-white dark:bg-[#001845]"
                   autoFocus
                 />
                 <Button size="icon" variant="ghost" onClick={() => handleSaveEdit(reminder.id)} className="shrink-0">
-                  <Check className="w-4 h-4 text-blue-900" />
+                  <Check className="w-4 h-4 text-blue-900 dark:text-white" />
                 </Button>
                 <Button size="icon" variant="ghost" onClick={cancelEdit} className="shrink-0">
-                  <X className="w-4 h-4 text-blue-900" />
+                  <X className="w-4 h-4 text-blue-900 dark:text-white" />
                 </Button>
               </>
             ) : (
               <>
-                <span className="flex-1 text-blue-900">{reminder.text}</span>
+                <span className="flex-1 text-blue-900 dark:text-white">{reminder.text}</span>
                 <Button
                   size="icon"
                   variant="ghost"
@@ -68,7 +68,7 @@ export function ReminderCard() {
                   }}
                   className="opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
                 >
-                  <Pencil className="w-4 h-4 text-blue-900" />
+                  <Pencil className="w-4 h-4 text-blue-900 dark:text-white" />
                 </Button>
                 <Button
                   size="icon"
@@ -76,7 +76,7 @@ export function ReminderCard() {
                   onClick={() => deleteReminder(reminder.id)}
                   className="opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
                 >
-                  <Trash2 className="w-4 h-4 text-blue-900" />
+                  <Trash2 className="w-4 h-4 text-blue-900 dark:text-white" />
                 </Button>
               </>
             )}
@@ -90,9 +90,9 @@ export function ReminderCard() {
           value={newReminder}
           onChange={(e) => setNewReminder(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleAddReminder()}
-          className="placeholder:text-gray-300 bg-white/80 border-blue-200"
+          className="pl-10 border-1 border-blue-200 dark:border-[#002855] focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 rounded-lg bg-white dark:bg-[#001845]"
         />
-        <Button onClick={handleAddReminder} size="icon" className="bg-blue-300 hover:bg-blue-200 text-blue-100">
+        <Button onClick={handleAddReminder} size="icon" className="bg-blue-300 dark:bg-[#001845] hover:bg-blue-200 dark:hover:bg-[#023E7D] text-blue-100">
           <Plus className="w-4 h-4" />
         </Button>
       </div>

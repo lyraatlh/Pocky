@@ -109,10 +109,10 @@ export function QuoteCard() {
   }
 
   return (
-    <Card className="p-6 bg-white/60 backdrop-blur-sm border-blue-200 relative">
+    <Card className="p-6 bg-white/60 backdrop-blur-sm dark:bg-[#002855] border-blue-200 dark:border-[#002855]">
       {isAdding ? (
         <div className="space-y-4">
-          <h3 className="font-semibold text-blue-900">Add New Quote</h3>
+          <h3 className="font-semibold text-blue-900 dark:text-white">Add New Quote</h3>
           <Textarea
             placeholder="Enter your quote here"
             value={editText}
@@ -121,11 +121,11 @@ export function QuoteCard() {
             autoFocus
           />
           <div className="flex gap-2">
-            <Button onClick={addQuote} className="flex-1">
+            <Button onClick={addQuote} className="flex-1 text-gray-700 dark:text-white bg-blue-200 dark:bg-blue-900 hover:text-gray-800 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-blue-800 border-1 border-blue-200 dark:border-blue-900">
               <Check className="w-4 h-4 mr-2" />
               Save
             </Button>
-            <Button onClick={cancel} variant="outline" className="flex-1 bg-transparent">
+            <Button onClick={cancel} variant="outline" className="flex-1 text-gray-700 dark:text-white bg-blue-200 dark:bg-blue-900 hover:text-gray-800 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-blue-800 border-1 border-blue-200 dark:border-blue-900 bg-transparent">
               <X className="w-4 h-4 mr-2" />
               Cancel
             </Button>
@@ -133,22 +133,22 @@ export function QuoteCard() {
         </div>
       ) : isEditing ? (
         <div className="space-y-4">
-          <h3 className="font-semibold text-blue-900">Edit Quote</h3>
+          <h3 className="font-semibold text-blue-900 dark:text-white">Edit Quote</h3>
           <Textarea
             value={editText}
             onChange={(e) => setEditText(e.target.value)}
-            className="bg-white/80 border-blue-200 min-h-[100px]"
+            className="border-1 border-blue-200 dark:border-[#002855] focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 rounded-lg bg-white dark:bg-[#001845] min-h-[100px]"
             autoFocus
           />
           <div className="flex gap-2">
-            <Button onClick={updateQuote} className=" flex-1 text-gray-700 dark:text-white bg-blue-200 dark:bg-blue-900 hover:text-gray-800 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-blue-800 border-1 border-blue-200 dark:border-blue-900">
+            <Button onClick={updateQuote} className="flex-1 text-gray-700 dark:text-white bg-blue-200 dark:bg-[#023E7D] hover:text-gray-800 dark:hover:text-white hover:bg-blue-100 dark:hover:bg-[#002855] border-1 border-blue-200 dark:border-[#023E7D]">
               <Check className="w-4 h-4 mr-2" />
               Save
             </Button>
-            <Button onClick={deleteQuote} variant="destructive" className="flex-1 text-gray-700 dark:text-white bg-blue-200 dark:bg-blue-900 hover:text-gray-800 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-blue-800 border-1 border-blue-200 dark:border-blue-900">
+            <Button onClick={deleteQuote} variant="destructive" className="flex-1 text-gray-700 dark:text-white bg-blue-100 dark:bg-[#002855] hover:text-gray-800 dark:hover:text-white hover:bg-blue-200 dark:hover:bg-[#023E7D] border-1 border-blue-200 dark:border-[#023E7D]">
               Delete
             </Button>
-            <Button onClick={cancel} variant="outline" className="flex-1 text-gray-700 dark:text-white bg-blue-200 dark:bg-blue-900 hover:text-gray-800 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-blue-800 border-1 border-blue-200 dark:border-blue-900 bg-transparent">
+            <Button onClick={cancel} variant="outline" className="flex-1 text-gray-700 dark:text-white bg-blue-100 dark:bg-[#002855] hover:text-gray-800 dark:hover:text-white hover:bg-blue-200 dark:hover:bg-[#023E7D] border-1 border-blue-200 dark:border-[#023E7D]">
               <X className="w-4 h-4 mr-2" />
               Cancel
             </Button>
@@ -157,7 +157,7 @@ export function QuoteCard() {
       ) : (
         <>
           <div className="flex items-start justify-between mb-4">
-            <div className="h-8 w-8 flex items-center justify-center text-blue-900 text-xl">
+            <div className="h-8 w-8 flex items-center justify-center text-blue-900 dark:text-white text-xl">
               <Quotes
               size={30} 
               color="#486fa3" 
@@ -166,26 +166,26 @@ export function QuoteCard() {
             </div>
             <div className="flex gap-1">
               <Button size="icon" variant="ghost" onClick={startEdit}>
-                <Pencil className="w-4 h-4 text-blue-900" />
+                <Pencil className="w-4 h-4 text-blue-900 dark:text-white" />
               </Button>
               <Button size="icon" variant="ghost" onClick={startAdd}>
-                <Plus className="w-4 h-4 text-blue-900" />
+                <Plus className="w-4 h-4 text-blue-900 dark:text-white" />
               </Button>
             </div>
           </div>
 
-          <p className="text-blue-900 italic text-balance leading-relaxed mb-4">{currentQuote.text}</p>
+          <p className="text-blue-900 dark:text-white italic text-balance leading-relaxed mb-4">{currentQuote.text}</p>
 
           {quotes.length > 1 && (
             <div className="flex items-center justify-between">
               <Button size="icon" variant="ghost" onClick={previousQuote}>
-                <ChevronLeft className="w-4 h-4 text-blue-900" />
+                <ChevronLeft className="w-4 h-4 text-blue-900 dark:text-white" />
               </Button>
-              <span className="text-xs text-blue-900">
+              <span className="text-xs text-blue-900 dark:text-white">
                 {currentIndex + 1} / {quotes.length}
               </span>
               <Button size="icon" variant="ghost" onClick={nextQuote}>
-                <ChevronRight className="w-4 h-4 text-blue-900" />
+                <ChevronRight className="w-4 h-4 text-blue-900 dark:text-white" />
               </Button>
             </div>
           )}

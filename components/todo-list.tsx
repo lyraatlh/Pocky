@@ -32,10 +32,10 @@ export function TodoList() {
   }
 
   return (
-    <Card className="p-6 bg-white/60 backdrop-blur-sm border-1 border-blue-200">
+    <Card className="p-6 bg-white/60 backdrop-blur-sm dark:bg-[#002855] border-1 border-blue-200 dark:border-[#002855]">
       <div className="flex items-center gap-2 mb-4">
         <CheckSquare size={25} color="#486fa3" weight="duotone" />
-        <h2 className="text-xl font-bold text-blue-900">To-do's list</h2>
+        <h2 className="text-xl font-bold text-blue-900 dark:text-white">To-do's list</h2>
       </div>
 
       <div className="flex gap-2 mb-1">
@@ -44,23 +44,23 @@ export function TodoList() {
           value={newTodo}
           onChange={(e) => setNewTodo(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleAddTodo()}
-          className="placeholder:text-gray-300 bg-white/80 border-blue-200"
+          className="pl-7 border-1 border-blue-200 dark:border-[#002855] focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 rounded-lg bg-white dark:bg-[#001845]"
         />
-        <Button onClick={handleAddTodo} size="icon" className="bg-blue-300 hover:bg-blue-200 text-blue-100">
+        <Button onClick={handleAddTodo} size="icon" className="bg-blue-300 dark:bg-[#001845] hover:bg-blue-200 dark:hover:bg-[#023E7D] text-blue-100">
           <Plus className="w-4 h-4" />
         </Button>
       </div>
 
       <div className="space-y-1 max-h-[300px] overflow-y-auto">
         {todos.length === 0 ? (
-          <p className="text-center text-blue-900 text-sm py-4">No tasks yet. Add one above!</p>
+          <p className="text-center text-blue-900 dark:text-white text-sm py-4">No tasks yet. Add one above!</p>
         ) : (
           todos.map((todo) => (
             <div
               key={todo.id}
-              className="flex items-center gap-2 p-2 rounded-lg hover:bg-blue-50/50 transition-colors group"
+              className="flex items-center gap-2 p-2 rounded-lg hover:bg-blue-50/50 dark:hover:bg-[#001845] transition-colors group"
             >
-              <Checkbox checked={todo.completed} onCheckedChange={() => toggleTodo(todo.id)} className="shrink-0" />
+              <Checkbox checked={todo.completed} onCheckedChange={() => toggleTodo(todo.id)} className="shrink-0 bg-blue-100 dark:bg-[#5C677D]" />
 
               {editingId === todo.id ? (
                 <>
@@ -68,19 +68,19 @@ export function TodoList() {
                     value={editText}
                     onChange={(e) => setEditText(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && handleSaveEdit(todo.id)}
-                    className="bg-white/80 border-blue-00"
+                    className="pl-7 rounded-lg bg-white dark:bg-[#001845]"
                     autoFocus
                   />
                   <Button size="icon" variant="ghost" onClick={() => handleSaveEdit(todo.id)} className="shrink-0">
-                    <Check className="w-4 h-4 text-blue-900" />
+                    <Check className="w-4 h-4 text-blue-900 dark:text-white" />
                   </Button>
                   <Button size="icon" variant="ghost" onClick={cancelEdit} className="shrink-0">
-                    <X className="w-4 h-4 text-blue-900" />
+                    <X className="w-4 h-4 text-blue-900 dark:text-white" />
                   </Button>
                 </>
               ) : (
                 <>
-                  <span className={`flex-1 ${todo.completed ? "line-through text-blue-900" : "text-blue-900"}`}>
+                  <span className={`flex-1 ${todo.completed ? "line-through text-blue-900 dark:text-white" : "text-blue-900 dark:text-white"}`}>
                     {todo.text}
                   </span>
                   <Button
@@ -92,7 +92,7 @@ export function TodoList() {
                     }}
                     className="opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
                   >
-                    <Pencil className="w-4 h-4 text-blue-900" />
+                    <Pencil className="w-4 h-4 text-blue-900 dark:text-white" />
                   </Button>
                   <Button
                     size="icon"
@@ -100,7 +100,7 @@ export function TodoList() {
                     onClick={() => deleteTodo(todo.id)}
                     className="opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
                   >
-                    <Trash2 className="w-4 h-4 text-blue-900" />
+                    <Trash2 className="w-4 h-4 text-blue-900 dark:text-white" />
                   </Button>
                 </>
               )}
