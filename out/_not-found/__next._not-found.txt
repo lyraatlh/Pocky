@@ -1,4 +1,4 @@
 1:"$Sreact.fragment"
 2:I[39756,["/Pocky/_next/static/chunks/97b538fd3525991d.js","/Pocky/_next/static/chunks/dfe24cce04d6304a.js"],"default"]
 3:I[37457,["/Pocky/_next/static/chunks/97b538fd3525991d.js","/Pocky/_next/static/chunks/dfe24cce04d6304a.js"],"default"]
-0:{"buildId":"2Q8GhvqkBkJlUk6CO5Cbl","rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"loading":null,"isPartial":false}
+0:{"buildId":"a2CMJntjuV_sSGhKsIM8d","rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"loading":null,"isPartial":false}
