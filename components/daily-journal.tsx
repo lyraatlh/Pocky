@@ -219,7 +219,7 @@ import {
                 <BookOpen className="h-6 w-6 text-blue-900 dark:text-white" />
                 <h3 className="text-xl font-bold text-blue-900 dark:text-white">Daily Journal</h3>
             </div>
-            <Badge className="bg-blue-900 text-blue-100 hover:bg-blue-800">
+            <Badge className="bg-blue-900 text-white hover:bg-blue-800">
                 {entries.length} {entries.length === 1 ? "entry" : "entries"}
             </Badge>
             </div>
@@ -300,7 +300,7 @@ import {
                     onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addTag())}
                     className="pl-5 border-1 border-blue-200 dark:border-[#002855] focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 rounded-lg bg-white dark:bg-[#001845]"
                     />
-                    <Button onClick={addTag} size="sm" className="bg-blue-300 dark:bg-[#001845] hover:bg-blue-200 dark:hover:bg-[#023E7D] text-blue-100">
+                    <Button onClick={addTag} size="sm" className="bg-blue-300 dark:bg-[#023E7D] hover:bg-blue-200 dark:hover:bg-[#001845] text-blue-100">
                     <Plus className="h-4 w-4" />
                     </Button>
                 </div>
@@ -333,7 +333,7 @@ import {
                     <Button
                     onClick={() => confirmDelete(entries.find((e) => e.date === dateString)!.id)}
                     variant="destructive"
-                    className="bg-red-500 hover:bg-red-600"
+                    className="h-8 w-8 p-0 text-red-600 dark:text-red-400 hover:text-red-800 hover:bg-red-100 dark:hover:bg-red-900"
                     >
                     <Trash2 className="h-4 w-4" />
                     </Button>
@@ -438,7 +438,7 @@ import {
                                 onClick={() => editEntry(entry)}
                                 size="sm"
                                 variant="ghost"
-                                className="text-blue-900 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-800"
+                                className="h-8 w-8 p-0 text-blue-900 dark:text-gray-300 hover:text-blue-800 hover:bg-blue-100 dark:hover:bg-blue-800"
                             >
                                 <Edit2 className="h-4 w-4" />
                             </Button>
@@ -446,7 +446,7 @@ import {
                                 onClick={() => confirmDelete(entry.id)}
                                 size="sm"
                                 variant="ghost"
-                                className="text-red-500 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-800"
+                                className="h-8 w-8 p-0 text-red-600 dark:text-red-400 hover:text-red-800 hover:bg-red-100 dark:hover:bg-red-900"
                             >
                                 <Trash2 className="h-4 w-4" />
                             </Button>

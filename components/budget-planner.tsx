@@ -72,14 +72,14 @@ interface BudgetPlannerProps {
     }
 
     return (
-        <Card className="bg-gradient-to-br from-blue-50 to-white border-blue-200 shadow-lg">
+        <Card className="bg-blue-50 dark:bg-[#002855] border-blue-200 dark:border-[#002855]">
         <CardHeader>
             <div className="flex items-center justify-between">
-            <CardTitle className="text-blue-900">Budget Planner</CardTitle>
+            <CardTitle className="text-blue-900 dark:text-white">Budget Planner</CardTitle>
             <Button
                 onClick={() => setIsAdding(!isAdding)}
                 size="sm"
-                className="text-gray-700 dark:text-white bg-blue-200 dark:bg-blue-900 hover:text-gray-800 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-blue-800 border-1 border-blue-200 dark:border-blue-900"
+                className="text-gray-700 dark:text-white bg-blue-200 dark:bg-[#023E7D] hover:text-gray-800 dark:hover:text-white hover:bg-blue-100 dark:hover:bg-[#002855] border-1 border-blue-200 dark:border-[#023E7D]"
             >
                 <Plus className="h-4 w-4" />
                 Add Budget
@@ -89,12 +89,12 @@ interface BudgetPlannerProps {
         <CardContent>
             <div className="space-y-4">
             {isAdding && (
-                <div className="p-4 bg-blue-50 rounded-lg border-2 border-blue-200 space-y-3">
+                <div className="p-4 bg-blue-50 dark:bg-[#002855] rounded-lg border-2 border-blue-200 dark:border-[#002855] space-y-3">
                 <Input
                     placeholder="Category name"
                     value={newCategory}
                     onChange={(e) => setNewCategory(e.target.value)}
-                    className="border-blue-200 focus:border-blue-300 focus:ring-blue-200"
+                    className="pl-5 border-1 border-blue-200 dark:border-[#002855] focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 rounded-lg bg-white dark:bg-[#001845]"
                 />
                 <Input
                     placeholder="Budget limit (Rp)"
@@ -102,12 +102,12 @@ interface BudgetPlannerProps {
                     value={newLimit}
                     onChange={(e) => setNewLimit(e.target.value)}
                     onKeyPress={(e) => e.key === "Enter" && addBudget()}
-                    className="border-blue-200 focus:border-blue-300 focus:ring-blue-200"
+                    className="pl-5 border-blue-200 dark:border-[#33415C] bg-white text-blue-900 dark:text-white placeholder:text-gray-300 dark:placeholder:text-gray-400"
                     min="0"
                     step="10000"
                 />
                 <div className="flex gap-2">
-                    <Button onClick={addBudget} className="text-gray-700 dark:text-white bg-blue-200 dark:bg-blue-900 hover:text-gray-800 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-blue-800 border-1 border-blue-200 dark:border-blue-900">
+                    <Button onClick={addBudget} className="text-gray-700 dark:text-white bg-blue-200 dark:bg-[#023E7D] hover:text-gray-800 dark:hover:text-white hover:bg-blue-100 dark:hover:bg-[#002855] border-1 border-blue-200 dark:border-[#023E7D]">
                     Create Budget
                     </Button>
                     <Button
@@ -117,7 +117,7 @@ interface BudgetPlannerProps {
                         setNewLimit("")
                     }}
                     variant="outline"
-                    className="text-gray-700 dark:text-white bg-blue-50 dark:bg-blue-900 hover:text-gray-800 dark:hover:text-white hover:bg-blue-200 dark:hover:bg-blue-800 border-1 border-blue-200 dark:border-blue-900"
+                    className="text-gray-700 dark:text-white bg-blue-100 dark:bg-[#002855] hover:text-gray-800 dark:hover:text-white hover:bg-blue-200 dark:hover:bg-[#023E7D] border-1 border-blue-200 dark:border-[#023E7D]"
                     >
                     Cancel
                     </Button>
@@ -127,7 +127,7 @@ interface BudgetPlannerProps {
 
             <div className="space-y-3 max-h-96 overflow-y-auto">
                 {budgets.length === 0 ? (
-                <div className="text-center py-8 text-blue-900/60">
+                <div className="text-center py-8 text-blue-900/60 dark:text-gray-400">
                     <AlertCircle className="h-8 w-8 mx-auto mb-2 opacity-50" />
                     <p>No budgets yet. Create one to start tracking spending!</p>
                 </div>
@@ -140,12 +140,12 @@ interface BudgetPlannerProps {
                     return (
                     <div
                         key={budget.id}
-                        className="p-4 bg-gradient-to-r from-white to-blue-50 rounded-lg border-2 border-blue-200 hover:border-blue-300 transition-all"
+                        className="p-4 bg-blue-50 dark:bg-[#001845] rounded-lg border-2 border-blue-200 hover:border-blue-300 transition-all"
                     >
                         <div className="flex items-center justify-between mb-3">
                         <div className="flex items-center gap-3">
                             <div className={`w-4 h-4 rounded-full ${budget.color}`} />
-                            <span className="font-semibold text-blue-900">{budget.category}</span>
+                            <span className="font-semibold text-blue-900 dark:text-white">{budget.category}</span>
                         </div>
                         <Button
                             onClick={() => deleteBudget(budget.id)}

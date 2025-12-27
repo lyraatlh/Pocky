@@ -51,9 +51,9 @@ export function TransactionList({ transactions, onEdit, onDelete }: TransactionL
   })
 
   return (
-    <Card className="bg-gradient-to-br from-blue-100 to-blue-50 border-blue-200 shadow-lg">
+    <Card className="bg-blue-50 dark:bg-[#002855] border-blue-200 dark:border-[#002855]">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-primary text-blue-900">Riwayat Transaksi</CardTitle>
+        <CardTitle className="flex items-center gap-2 text-primary text-blue-900 dark:text-white">Riwayat Transaksi</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-3 max-h-[500px] overflow-y-auto">
@@ -73,7 +73,7 @@ export function TransactionList({ transactions, onEdit, onDelete }: TransactionL
               <div
                 key={transaction.id}
                 className={`p-4 rounded-lg border-2 ${
-                  transaction.type === "income" ? "bg-blue-50 border-blue-200" : "bg-rose-50 border-rose-200"
+                  transaction.type === "income" ? "bg-blue-50 dark:bg-[#023E7D] border-blue-200 dark:border-[#023E7D]" : "bg-rose-50 dark:bg-rose-900 border-rose-200 dark:border-rose-900"
                 }`}
               >
                 <div className="flex items-start justify-between gap-2">
@@ -97,10 +97,10 @@ export function TransactionList({ transactions, onEdit, onDelete }: TransactionL
                         {transaction.description}
                       </p>
                     </div>
-                    <p className="text-sm text-muted-foreground">{formatDate(transaction.date)}</p>
+                    <p className="text-sm text-muted-foreground text-gray-400 dark:text-gray-400">{formatDate(transaction.date)}</p>
                     <p
                       className={`text-lg font-bold mt-1 ${
-                        transaction.type === "income" ? "text-blue-900" : "text-rose-700"
+                        transaction.type === "income" ? "text-blue-900 dark:text-white" : "text-rose-700 dark:text-white"
                       }`}
                     >
                       {transaction.type === "income" ? "+" : "-"} {formatCurrency(transaction.amount)}
@@ -111,9 +111,9 @@ export function TransactionList({ transactions, onEdit, onDelete }: TransactionL
                       size="icon"
                       variant="ghost"
                       onClick={() => onEdit(transaction)}
-                      className="h-8 w-8 hover:bg-primary/10"
+                      className="h-8 w-8 p-0 text-blue-900 dark:text-gray-300 hover:text-blue-800 hover:bg-blue-100 dark:hover:bg-blue-800"
                     >
-                      <Pencil className="h-4 w-4 text-primary" />
+                      <Pencil className="h-8 w-8 p-0 text-blue-900 dark:text-gray-300 hover:text-blue-800 hover:bg-blue-100 dark:hover:bg-blue-800" />
                     </Button>
                     <Button
                       size="icon"
@@ -123,9 +123,9 @@ export function TransactionList({ transactions, onEdit, onDelete }: TransactionL
                           onDelete(transaction.id)
                         }
                       }}
-                      className="h-8 w-8 hover:bg-destructive/10"
+                      className="h-8 w-8 p-0 text-red-600 dark:text-red-400 hover:text-red-800 hover:bg-red-100 dark:hover:bg-red-900"
                     >
-                      <Trash2 className="h-4 w-4 text-destructive" />
+                      <Trash2 className="h-8 w-8 p-0 text-red-600 dark:text-red-400 hover:text-red-800 hover:bg-red-100 dark:hover:bg-red-900" />
                     </Button>
                   </div>
                 </div>

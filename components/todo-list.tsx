@@ -46,7 +46,7 @@ export function TodoList() {
           onKeyDown={(e) => e.key === "Enter" && handleAddTodo()}
           className="pl-7 border-1 border-blue-200 dark:border-[#002855] focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 rounded-lg bg-white dark:bg-[#001845]"
         />
-        <Button onClick={handleAddTodo} size="icon" className="bg-blue-300 dark:bg-[#001845] hover:bg-blue-200 dark:hover:bg-[#023E7D] text-blue-100">
+        <Button onClick={handleAddTodo} size="icon" className="bg-blue-300 dark:bg-[#023E7D] hover:bg-blue-200 dark:hover:bg-[#001845] text-blue-100">
           <Plus className="w-4 h-4" />
         </Button>
       </div>

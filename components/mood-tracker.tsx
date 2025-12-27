@@ -216,7 +216,7 @@ import {
             </p>
             </div>
             {dominantMood && totalEntries > 3 && (
-            <div className="text-right bg-white/50 dark:bg-blue-950/50 p-3 rounded-xl">
+            <div className="text-right bg-white/50 dark:bg-[#023E7D]/40 p-3 rounded-xl">
                 <p className="text-xs text-blue-900 dark:text-white mb-1 flex items-center gap-1 justify-end">
                 <TrendingUp className="w-3 h-3" />
                 Most common
@@ -239,7 +239,7 @@ import {
                 {editingEntry ? "Edit Mood Entry" : "How are you feeling?"}
                 </p>
                 {editingEntry && (
-                <Button variant="ghost" size="sm" onClick={resetForm} className="text-gray-700 dark:text-white bg-blue-200 dark:bg-blue-900 hover:text-gray-800 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-blue-800 border-1 border-blue-200 dark:border-blue-900">
+                <Button variant="ghost" size="sm" onClick={resetForm} className="text-gray-700 dark:text-white bg-blue-200 dark:bg-[#023E7D] hover:text-gray-800 dark:hover:text-white hover:bg-blue-100 dark:hover:bg-[#002855] border-1 border-blue-200 dark:border-[#023E7D]">
                     Cancel Edit
                 </Button>
                 )}
@@ -275,8 +275,8 @@ import {
                     onClick={() => setSelectedMood(mood.value)}
                     className={`flex flex-col items-center gap-2 p-3 rounded-xl transition-all duration-300 ${
                         selectedMood === mood.value
-                        ? "bg-blue-300 dark:bg-blue-600 shadow-lg scale-105"
-                        : "bg-white/80 dark:bg-blue-800/60 hover:bg-blue-100 dark:hover:bg-blue-700 hover:scale-105"
+                        ? "bg-blue-300 dark:bg-[#023E7D] shadow-lg scale-105"
+                        : "bg-white/80 dark:bg-[#001845]/80 hover:bg-blue-100 dark:hover:bg-[#002855] hover:scale-105"
                     }`}
                     >
                     {mood.emoji.startsWith("http") || mood.emoji.startsWith("data:") ? (
@@ -360,7 +360,7 @@ import {
                     return (
                     <div
                         key={entry.id}
-                        className="bg-white/80 dark:bg-blue-900/60 p-4 rounded-xl border border-blue-200 dark:border-[#002855] hover:shadow-md transition-all"
+                        className="bg-white/80 dark:bg-[#001845] p-4 rounded-xl border border-blue-200 dark:border-[#002855] hover:shadow-md transition-all"
                     >
                         <div className="flex items-start justify-between gap-3">
                         <div className="flex items-start gap-3 flex-1">
@@ -378,7 +378,7 @@ import {
                             <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-1">
                                 <span className="font-semibold text-blue-900 dark:text-white">{entry.moodLabel}</span>
-                                <span className="text-xs text-blue-900 dark:text-blue-400">
+                                <span className="text-xs text-blue-900 dark:text-gray-200">
                                 {new Date(entry.date).toLocaleDateString("id-ID", {
                                     weekday: "short",
                                     year: "numeric",
@@ -397,7 +397,7 @@ import {
                             variant="ghost"
                             size="sm"
                             onClick={() => editEntry(entry)}
-                            className="h-8 w-8 p-0 text-blue-900 dark:text-blue-400 hover:text-blue-800 hover:bg-blue-100 dark:hover:bg-blue-800"
+                            className="h-8 w-8 p-0 text-blue-900 dark:text-gray-300 hover:text-blue-800 hover:bg-blue-100 dark:hover:bg-blue-800"
                             >
                             <Edit2 className="w-4 h-4" />
                             </Button>
@@ -425,7 +425,7 @@ import {
 
             {/* Statistics */}
             {moods.length > 0 && (
-            <div className="bg-white/70 dark:bg-blue-900/50 p-4 rounded-xl border border-blue-200 dark:border-[#002855]">
+            <div className="bg-white/70 dark:bg-[#001845] p-4 rounded-xl border border-blue-200 dark:border-[#002855]">
                 <p className="text-sm font-semibold text-blue-900 dark:text-white mb-3">Mood Statistics</p>
                 <div className="space-y-2">
                 {Object.entries(moodCounts)

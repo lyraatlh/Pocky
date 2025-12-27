@@ -86,9 +86,9 @@ export function TransactionForm({ onSubmit, initialData, onCancel }: Transaction
   const categories = type === "income" ? INCOME_CATEGORIES : EXPENSE_CATEGORIES
 
   return (
-    <Card className="bg-gradient-to-br from-blue-50 to-blue-10 border-blue-200 border-1">
+    <Card className="bg-blue-50 dark:bg-[#002855] border-blue-200 dark:border-[#002855] border-1">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-primary text-blue-900">
+        <CardTitle className="flex items-center gap-2 text-primary text-blue-900 dark:text-white">
           {initialData ? "Edit Transaction" : "Add New Transaction"}
         </CardTitle>
       </CardHeader>
@@ -101,10 +101,10 @@ export function TransactionForm({ onSubmit, initialData, onCancel }: Transaction
               data-state={type === "income" ? "active" : "inactive"}
               className="
                 flex-1 gap-2
-                border-blue-200 text-blue-900
-                hover:bg-blue-50 hover:text-blue-900
+                border-blue-200 dark:border-[#023E7D] text-blue-900 dark:text-white
+                hover:bg-blue-50 hover:text-blue-900 dark:hover:text-gray-300
 
-                data-[state=active]:bg-blue-200
+                data-[state=active]:bg-blue-200 dark:data-[state=active]:bg-[#023E7D]
                 data-[state=active]:text-blue-900
                 data-[state=active]:border-blue-200
               "
@@ -123,10 +123,10 @@ export function TransactionForm({ onSubmit, initialData, onCancel }: Transaction
               data-state={type === "expense" ? "active" : "inactive"}
               className="
                 flex-1 gap-2
-                border-blue-200 text-blue-00
-                hover:bg-blue-50 hover:text-blue-900
+                border-blue-200 dark:border-[#023E7D] text-blue-900 dark:text-white
+                hover:bg-blue-50 hover:text-blue-900 dark:hover:text-gray-300
 
-                data-[state=active]:bg-blue-200
+                data-[state=active]:bg-blue-200 dark:data-[state=active]:bg-[#023E7D]
                 data-[state=active]:text-blue-900
                 data-[state=active]:border-blue-200
               "
@@ -142,22 +142,22 @@ export function TransactionForm({ onSubmit, initialData, onCancel }: Transaction
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="description" className="text-blue-900">Description</Label>
+            <Label htmlFor="description" className="text-blue-900 dark:text-white">Description</Label>
             <Input
               id="description"
               placeholder="beli makanan pocky"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="placeholder:text-gray-400 border-blue-200 focus:border-blue-200"
+              className="pl-5 border-1 border-blue-200 dark:border-[#002855] focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 rounded-lg bg-white dark:bg-[#001845]"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="category" className="text-blue-900">
+            <Label htmlFor="category" className="text-blue-900 dark:text-white">
               Category
             </Label>
             <Select value={category} onValueChange={setCategory}>
-              <SelectTrigger className="w-full border-blue-200 focus:border-blue-300 focus:ring-blue-200">
+              <SelectTrigger className="w-full pl-5 border-1 border-blue-200 dark:border-[#002855] focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 rounded-lg bg-white dark:bg-[#001845]">
                 <SelectValue placeholder="Select a category" />
               </SelectTrigger>
               <SelectContent>
@@ -171,7 +171,7 @@ export function TransactionForm({ onSubmit, initialData, onCancel }: Transaction
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="amount" className="text-blue-900">Amount (Rp)</Label>
+            <Label htmlFor="amount" className="text-blue-900 dark:text-white">Amount (Rp)</Label>
             <Input
               id="amount"
               type="number"
@@ -180,23 +180,23 @@ export function TransactionForm({ onSubmit, initialData, onCancel }: Transaction
               onChange={(e) => setAmount(e.target.value)}
               min="0"
               step="1000"
-              className="placeholder:text-gray-400 border-blue-200 focus:border-blue-200"
+              className="pl-5 border-1 border-blue-200 dark:border-[#002855] focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 rounded-lg bg-white dark:bg-[#001845]"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="date" className="text-blue-900">Date</Label>
+            <Label htmlFor="date" className="text-blue-900 dark:text-white">Date</Label>
             <Input
               id="date"
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              className="text-gray-700 border-blue-200 focus:border-blue-200"
+              className="pl-5 border-1 border-blue-200 dark:border-[#002855] focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 rounded-lg bg-white dark:bg-[#001845]"
             />
           </div>
 
           <div className="flex gap-2">
-            <Button type="submit" className="flex-1 w-full text-gray-700 dark:text-white bg-blue-200 dark:bg-blue-900 hover:text-gray-800 dark:hover:text-white hover:bg-blue-50 dark:hover:bg-blue-800 border-1 border-blue-200 dark:border-blue-900">
+            <Button type="submit" className="flex-1 w-full text-gray-700 dark:text-white bg-blue-200 dark:bg-[#023E7D] hover:text-gray-800 dark:hover:text-white hover:bg-blue-100 dark:hover:bg-[#002855] border-1 border-blue-200 dark:border-[#023E7D]">
               {initialData ? (
                 <>
                   <Plus className="h-4 w-4 mr-2" />

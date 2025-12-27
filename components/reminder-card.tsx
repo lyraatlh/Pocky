@@ -36,8 +36,8 @@ export function ReminderCard() {
       <div className="space-y-3 mb-4">
         {reminders.map((reminder) => (
           <div key={reminder.id} className="flex items-center gap-3 group">
-            <div className="w-5 h-5 rounded-full bg-blue-200 flex items-center justify-center shrink-0">
-              <div className="w-2 h-2 rounded-full bg-blue-300" />
+            <div className="w-5 h-5 rounded-full bg-blue-200 dark:bg-[#023E7D] flex items-center justify-center shrink-0">
+              <div className="w-2 h-2 rounded-full bg-blue-300 dark:bg-[#002855]" />
             </div>
 
             {editingId === reminder.id ? (
@@ -92,7 +92,7 @@ export function ReminderCard() {
           onKeyDown={(e) => e.key === "Enter" && handleAddReminder()}
           className="pl-10 border-1 border-blue-200 dark:border-[#002855] focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 rounded-lg bg-white dark:bg-[#001845]"
         />
-        <Button onClick={handleAddReminder} size="icon" className="bg-blue-300 dark:bg-[#001845] hover:bg-blue-200 dark:hover:bg-[#023E7D] text-blue-100">
+        <Button onClick={handleAddReminder} size="icon" className="bg-blue-300 dark:bg-[#023E7D] hover:bg-blue-200 dark:hover:bg-[#001845] text-blue-100">
           <Plus className="w-4 h-4" />
         </Button>
       </div>

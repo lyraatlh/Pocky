@@ -9,7 +9,7 @@ interface ExpenseChartsProps {
     transactions: Transaction[]
     }
 
-    const COLORS = ["#60a5fa", "#a78bfa", "#f472b6", "#34d399", "#fbbf24", "#fb923c"]
+    const COLORS = ["#a6ceffff", "#a6ffacff", "#ffa6daff", "#b9a6ffff", "#ffc5a6ff", "#a6ceffff"]
 
     export function ExpenseCharts({ transactions }: ExpenseChartsProps) {
     // Category breakdown
@@ -61,20 +61,20 @@ interface ExpenseChartsProps {
 
     return (
         <div className="space-y-6">
-        <Card className="p-6 bg-gradient-to-br from-violet-50 to-purple-50 border-2 border-violet-200 shadow-lg">
+        <Card className="p-6 bg-blue-50 dark:bg-[#002855] border-1 border-blue-200 dark:border-[#002855]">
             <div className="flex items-center gap-2 mb-4">
-            <PieChartIcon className="h-6 w-6 text-primary" />
-            <h3 className="text-xl font-bold text-primary">Expense by Category</h3>
+            <PieChartIcon className="h-6 w-6 text-blue-900 dark:text-white" />
+            <h3 className="text-xl font-bold text-blue-900 dark:text-white">Expense by Category</h3>
             </div>
 
             {pieData.length === 0 ? (
-            <p className="text-center text-muted-foreground py-8">
+            <p className="text-center text-muted-foreground dark:text-gray-400 py-8">
                 No expense data yet. Add categories to your expenses!
             </p>
             ) : (
             <ResponsiveContainer width="100%" height={300}>
                 <PieChart>
-                <Pie data={pieData} cx="50%" cy="50%" labelLine={false} outerRadius={100} fill="#8884d8" dataKey="value">
+                <Pie data={pieData} cx="50%" cy="50%" labelLine={false} outerRadius={100} fill="#a9a6ffff" dataKey="value">
                     {pieData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
@@ -86,14 +86,14 @@ interface ExpenseChartsProps {
             )}
         </Card>
 
-        <Card className="p-6 bg-gradient-to-br from-cyan-50 to-blue-50 border-2 border-cyan-200 shadow-lg">
+        <Card className="p-6 bg-blue-50 dark:bg-[#002855] border-1 border-blue-200 dark:border-[#002855]">
             <div className="flex items-center gap-2 mb-4">
-            <TrendingUp className="h-6 w-6 text-primary" />
-            <h3 className="text-xl font-bold text-primary">Monthly Trend</h3>
+            <TrendingUp className="h-6 w-6 text-blue-900 dark:text-white" />
+            <h3 className="text-xl font-bold text-blue-900 dark:text-white">Monthly Trend</h3>
             </div>
 
             {lineData.length === 0 ? (
-            <p className="text-center text-muted-foreground py-8">No data yet. Start tracking to see trends!</p>
+            <p className="text-center text-muted-foreground dark:text-gray-400 py-8">No data yet. Start tracking to see trends!</p>
             ) : (
             <>
                 <ResponsiveContainer width="100%" height={250}>
@@ -102,25 +102,25 @@ interface ExpenseChartsProps {
                     <YAxis />
                     <Tooltip formatter={(value: number) => `Rp ${value.toLocaleString("id-ID")}`} />
                     <Legend />
-                    <Line type="monotone" dataKey="income" stroke="#34d399" strokeWidth={2} />
-                    <Line type="monotone" dataKey="expense" stroke="#f472b6" strokeWidth={2} />
+                    <Line type="monotone" dataKey="income" stroke="#a6ceffff" strokeWidth={2} />
+                    <Line type="monotone" dataKey="expense" stroke="#ffa6b2ff" strokeWidth={2} />
                 </LineChart>
                 </ResponsiveContainer>
 
                 <div className="mt-4 grid grid-cols-3 gap-4">
-                <div className="text-center p-3 bg-white rounded-lg">
-                    <div className="text-sm text-muted-foreground">Savings Rate</div>
-                    <div className="text-2xl font-bold text-green-600">{savingsRate.toFixed(1)}%</div>
+                <div className="flex-1 text-center p-3 bg-white dark:bg-[#001845] rounded-lg">
+                    <div className="w-full flex-1 text-sm text-muted-foreground dark:text-gray-400">Savings Rate</div>
+                    <div className="w-full flex-1 text-2xl font-bold text-blue-900 dark:text-white">{savingsRate.toFixed(1)}%</div>
                 </div>
-                <div className="text-center p-3 bg-white rounded-lg">
-                    <div className="text-sm text-muted-foreground">Avg Income</div>
-                    <div className="text-2xl font-bold text-blue-600">
+                <div className="flex-1 text-center p-3 bg-white dark:bg-[#001845] rounded-lg">
+                    <div className="w-full flex-1 text-sm text-muted-foreground dark:text-gray-400">Avg Income</div>
+                    <div className="w-full flex-1 text-2xl font-bold text-blue-900 dark:text-white">
                     Rp {Math.round(totalIncome / Math.max(lineData.length, 1)).toLocaleString("id-ID")}
                     </div>
                 </div>
-                <div className="text-center p-3 bg-white rounded-lg">
-                    <div className="text-sm text-muted-foreground">Avg Expense</div>
-                    <div className="text-2xl font-bold text-pink-600">
+                <div className="flex-1 text-center p-3 bg-white dark:bg-[#001845] rounded-lg">
+                    <div className="w-full flex-1 text-sm text-muted-foreground dark:text-gray-400">Avg Expense</div>
+                    <div className="w-full flex-1 text-2xl font-bold text-blue-900 dark:text-white">
                     Rp {Math.round(totalExpense / Math.max(lineData.length, 1)).toLocaleString("id-ID")}
                     </div>
                 </div>

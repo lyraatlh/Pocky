@@ -169,7 +169,7 @@ import {
             </div>
             <div>
                 <h3 className="text-2xl font-bold text-blue-900 dark:text-white">Habit Tracker</h3>
-                <p className="text-sm text-blue-900 dark:text-blue-100">
+                <p className="text-sm text-blue-900 dark:text-white">
                 {totalCompleted} of {habits.length} completed • {completionRate}% today
                 </p>
             </div>
@@ -237,14 +237,14 @@ import {
                     </div>
                     </div>
                     <div className="flex gap-1">
-                    <Button variant="ghost" size="sm" onClick={() => openEditDialog(habit)} className="h-8 w-8 p-0">
+                    <Button variant="ghost" size="sm" onClick={() => openEditDialog(habit)} className="h-8 w-8 p-0 text-blue-900 dark:text-gray-300 hover:text-blue-800 hover:bg-blue-100 dark:hover:bg-blue-800">
                         <Edit className="h-4 w-4" />
                     </Button>
                     <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => setDeleteConfirm(habit.id)}
-                        className="h-8 w-8 p-0 text-red-500 hover:text-red-700"
+                        className="h-8 w-8 p-0 text-red-600 dark:text-red-400 hover:text-red-800 hover:bg-red-100 dark:hover:bg-red-900"
                     >
                         <Trash2 className="h-4 w-4" />
                     </Button>
