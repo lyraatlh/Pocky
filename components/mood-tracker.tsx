@@ -50,11 +50,6 @@ import {
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
     const [entryToDelete, setEntryToDelete] = useState<string | null>(null)
 
-    // Form states
-    const [selectedMood, setSelectedMood] = useState<string | null>(null)
-    const [note, setNote] = useState("")
-    const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split("T")[0])
-
     // Custom mood creation states
     const [newMoodLabel, setNewMoodLabel] = useState("")
     const [newMoodColor, setNewMoodColor] = useState("#3b82f6")
@@ -63,6 +58,14 @@ import {
     const [newMoodUrl, setNewMoodUrl] = useState("")
     const [newMoodUploadPreview, setNewMoodUploadPreview] = useState<string>("")
     const fileInputRef = useRef<HTMLInputElement>(null)
+
+    // State to manage custom mood icon being edited
+    const [customMoodToDelete, setCustomMoodToDelete] = useState<string | null>(null)
+    const [isDeleteCustomMoodDialogOpen, setIsDeleteCustomMoodDialogOpen] = useState(false)
+
+    const [selectedMood, setSelectedMood] = useState<string | null>(null)
+    const [selectedDate, setSelectedDate] = useState<string>(new Date().toISOString().split("T")[0])
+    const [note, setNote] = useState<string>("")
 
     const allMoods = [...DEFAULT_MOODS, ...customMoods]
 
@@ -121,7 +124,6 @@ import {
         setSelectedMood(entry.mood)
         setNote(entry.note || "")
         setSelectedDate(entry.date)
-        window.scrollTo({ top: 0, behavior: "smooth" })
     }
 
     const deleteEntry = (id: string) => {
@@ -181,6 +183,14 @@ import {
         setNewMoodUrl("")
         setNewMoodUploadPreview("")
         setNewMoodColor("#3b82f6")
+    }
+
+    const deleteCustomMood = (moodValue: string) => {
+        const updatedCustomMoods = customMoods.filter((mood) => mood.value !== moodValue)
+        setCustomMoods(updatedCustomMoods)
+        localStorage.setItem("customMoods", JSON.stringify(updatedCustomMoods))
+        setIsDeleteCustomMoodDialogOpen(false)
+        setCustomMoodToDelete(null)
     }
 
     const filteredEntries = moods.filter((entry) => {
@@ -462,6 +472,41 @@ import {
                 </div>
             </div>
             )}
+            
+            {/* Custom Moods */}
+            {customMoods.length > 0 && (
+            <div className="bg-white/70 dark:bg-[#001845] p-5 rounded-xl border border-blue-200 dark:border-[#002855]">
+                <h4 className="text-sm font-semibold text-blue-900 dark:text-white mb-3">Custom Moods</h4>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                {customMoods.map((mood) => (
+                    <div
+                    key={mood.value}
+                    className="flex flex-col items-center gap-2 p-3 bg-white/70 dark:bg-[#001845] rounded-lg hover:bg-blue-100 dark:hover:bg-[#002855] transition-colors relative group"
+                    >
+                    <div className="flex justify-center w-full">
+                        {mood.emoji.startsWith("http") || mood.emoji.startsWith("data:") ? (
+                        <img src={mood.emoji || "/placeholder.svg"} alt={mood.label} className="w-8 h-8 object-contain" />
+                        ) : (
+                        <span className="text-2xl">{mood.emoji}</span>
+                        )}
+                    </div>
+                    <p className="text-xs text-center text-blue-900 dark:text-blue-100 line-clamp-2">{mood.label}</p>
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => {
+                        setCustomMoodToDelete(mood.value)
+                        setIsDeleteCustomMoodDialogOpen(true)
+                        }}
+                        className="text-red-700 dark:text-red-400 hover:text-red-800 hover:bg-red-100 dark:hover:bg-red-900 absolute top-1.5 right-2 h-6 w-6 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                        <Trash2 className="w-3 h-3" />
+                    </Button>
+                    </div>
+                ))}
+                </div>
+            </div>
+            )}
         </div>
 
         {/* Add Custom Mood Dialog */}
@@ -605,6 +650,36 @@ import {
             </DialogFooter>
             </DialogContent>
         </Dialog>
+
+        {/* Delete Custom Mood Dialog */}
+        <Dialog open={isDeleteCustomMoodDialogOpen} onOpenChange={setIsDeleteCustomMoodDialogOpen}>
+            <DialogContent className="bg-blue-50 dark:bg-[#002855] border-blue-200 dark:border-[#002855]">
+            <DialogHeader>
+                <DialogTitle className="text-blue-900 dark:text-white">Delete Custom Mood?</DialogTitle>
+                <DialogDescription className="text-blue-900 dark:text-white">
+                This custom mood will be removed. This action cannot be undone.
+                </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+                <Button
+                variant="outline"
+                onClick={() => {
+                    setIsDeleteCustomMoodDialogOpen(false)
+                    setCustomMoodToDelete(null)
+                }}
+                className="text-gray-700 dark:text-white bg-blue-200 dark:bg-[#023E7D] hover:text-gray-800 dark:hover:text-white hover:bg-blue-100 dark:hover:bg-[#002855] border-1 border-blue-200 dark:border-[#023E7D]"
+                >
+                Cancel
+                </Button>
+                <Button
+                onClick={() => customMoodToDelete && deleteCustomMood(customMoodToDelete)}
+                className="text-gray-700 dark:text-white bg-blue-100 dark:bg-[#002855] hover:text-gray-800 dark:hover:text-white hover:bg-blue-200 dark:hover:bg-[#023E7D] border-1 border-blue-200 dark:border-[#023E7D]"
+                >
+                Delete
+                </Button>
+            </DialogFooter>
+            </DialogContent>
+        </Dialog>        
         </Card>
     )
 }
