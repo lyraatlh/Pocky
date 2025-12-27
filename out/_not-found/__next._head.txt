@@ -1,0 +1,8 @@
+1:"$Sreact.fragment"
+2:I[97367,["/Pocky/_next/static/chunks/97b538fd3525991d.js","/Pocky/_next/static/chunks/dfe24cce04d6304a.js"],"ViewportBoundary"]
+4:I[97367,["/Pocky/_next/static/chunks/97b538fd3525991d.js","/Pocky/_next/static/chunks/dfe24cce04d6304a.js"],"MetadataBoundary"]
+5:"$Sreact.suspense"
+7:I[27201,["/Pocky/_next/static/chunks/97b538fd3525991d.js","/Pocky/_next/static/chunks/dfe24cce04d6304a.js"],"IconMark"]
+0:{"buildId":"2Q8GhvqkBkJlUk6CO5Cbl","rsc":["$","$1","h",{"children":[["$","meta",null,{"name":"robots","content":"noindex"}],["$","$L2",null,{"children":"$@3"}],["$","div",null,{"hidden":true,"children":["$","$L4",null,{"children":["$","$5",null,{"name":"Next.Metadata","children":"$@6"}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"loading":null,"isPartial":false}
+3:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+6:[["$","title","0",{"children":"Pocky"}],["$","meta","1",{"name":"description","content":"Track your daily activities with Pocky"}],["$","meta","2",{"name":"generator","content":"v0.app"}],["$","link","3",{"rel":"icon","href":"/kitty.png","media":"(prefers-color-scheme: light)"}],["$","link","4",{"rel":"icon","href":"/kitty.png","media":"(prefers-color-scheme: dark)"}],["$","link","5",{"rel":"icon","href":"/kitty.svg","type":"image/svg+xml"}],["$","link","6",{"rel":"apple-touch-icon","href":"/kitty.png"}],["$","$L7","7",{}]]
