@@ -224,7 +224,7 @@ interface AchievementStats {
             </div>
         )}
 
-        <Card className="p-6 bg-from-[#dbeafe] to-[#eff6ff] dark:bg-[#002855] border-1 border-blue-200 dark:border-[#002855]">
+        <Card className="p-6 bg-blue-50 dark:bg-[#002855] border-1 border-blue-200 dark:border-[#002855]">
             <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
                 <div className="p-2 bg-blue-200 dark:bg-blue-900 rounded-lg">
