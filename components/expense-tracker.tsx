@@ -42,7 +42,7 @@ export function ExpenseTracker({
     <>
       <Header />
       <StatsCards income={income} expense={expense} balance={balance} />
-      <div className="grid md:grid-cols-2 gap-6 mt-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
         <TransactionForm
           onSubmit={
             editingTransaction
@@ -57,9 +57,12 @@ export function ExpenseTracker({
         />
         <TransactionList transactions={transactions} onEdit={startEdit} onDelete={onDeleteTransaction} />
 
-        <div className="space-y-6">
+        <div className="space-y-6 col-span-1 lg:col-span-1">
           <BudgetPlanner transactions={transactions} />
           <ExportData transactions={transactions} />
+        </div>
+
+        <div className="col-span-1 lg:col-span-1">
           <ExpenseCharts transactions={transactions} />
         </div>
       </div>

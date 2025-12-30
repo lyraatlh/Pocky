@@ -16,13 +16,13 @@ export function StatsCards({ income, expense, balance }: StatsCardsProps) {
   }
 
   return (
-    <div className="grid md:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       <Card className="bg-blue-100 dark:bg-[#002855] border-blue-200 dark:border-[#002855] shadow-lg">
         <CardContent className="pt-4">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-semibold text-blue-900 dark:text-white">Total Income</p>
-              <p className="text-xl font-bold text-blue-900 dark:text-white">{formatCurrency(income)}</p>
+              <p className="text-lg sm:text-xl font-bold text-blue-900 dark:text-white">{formatCurrency(income)}</p>
             </div>
             <div className="bg-blue-200 dark:bg-[#023E7D] p-3 rounded-full">
               <TrendingUp className="h-4 w-4 text-blue-900 dark:text-white" />
@@ -36,7 +36,7 @@ export function StatsCards({ income, expense, balance }: StatsCardsProps) {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-semibold text-rose-900 dark:text-white">Total Expense</p>
-              <p className="text-xl font-bold text-rose-900 dark:text-white">{formatCurrency(expense)}</p>
+              <p className="text-lg sm:text-xl font-bold text-rose-900 dark:text-white">{formatCurrency(expense)}</p>
             </div>
             <div className="bg-rose-200 dark:bg-rose-800 p-3 rounded-full">
               <TrendingDown className="h-4 w-4 text-rose-700 dark:text-white" />
@@ -50,7 +50,9 @@ export function StatsCards({ income, expense, balance }: StatsCardsProps) {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-semibold text-blue-900 dark:text-white">Current Balance</p>
-              <p className={`text-xl font-bold ${balance >= 0 ? "text-blue-900 dark:text-white" : "text-rose-700 dark:text-white"}`}>
+              <p
+                className={`text-lg sm:text-xl font-bold ${balance >= 0 ? "text-blue-900 dark:text-white" : "text-rose-700 dark:text-white"}`}
+              >
                 {formatCurrency(balance)}
               </p>
             </div>
