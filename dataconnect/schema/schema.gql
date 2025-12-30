@@ -1,0 +1,38 @@
+type User @table {
+  displayName: String!
+  createdAt: Timestamp!
+  email: String
+  photoUrl: String
+}
+
+type Routine @table {
+  user: User!
+  name: String!
+  createdAt: Timestamp!
+  description: String
+  orderIndex: Int
+}
+
+type Habit @table {
+  routine: Routine!
+  name: String!
+  createdAt: Timestamp!
+  icon: String
+  frequency: String
+}
+
+type Completion @table {
+  user: User!
+  habit: Habit!
+  completionDate: Date!
+  createdAt: Timestamp!
+  notes: String
+}
+
+type DailyReflection @table {
+  user: User!
+  reflectionDate: Date!
+  content: String!
+  createdAt: Timestamp!
+  mood: String
+}
