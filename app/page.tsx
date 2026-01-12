@@ -4,10 +4,11 @@ import { useState } from "react"
 import { ExpenseTracker } from "@/components/expense-tracker"
 import { Dashboard } from "@/components/dashboard"
 import { Navigation } from "@/components/navigation"
+import { ReadingTimeTracker } from "@/components/reading-time-tracker"
 import { useTransactions } from "@/hooks/use-transactions"
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState<"dashboard" | "tracker">("dashboard")
+  const [activeTab, setActiveTab] = useState<"dashboard" | "tracker" | "reading">("dashboard")
   const { transactions, addTransaction, updateTransaction, deleteTransaction, isLoaded } = useTransactions()
 
   if (!isLoaded) {
@@ -27,16 +28,19 @@ export default function Home() {
     >
       <Navigation activeTab={activeTab} onTabChange={setActiveTab} />
 
-      <div className="container mx-auto px-3 sm:px-4 py-6 sm:py-8 max-w-6xl">
-        {activeTab === "dashboard" && <Dashboard transactions={transactions} />}
-        {activeTab === "tracker" && (
-          <ExpenseTracker
-            transactions={transactions}
-            onAddTransaction={addTransaction}
-            onUpdateTransaction={updateTransaction}
-            onDeleteTransaction={deleteTransaction}
-          />
-        )}
+      <div className="w-full px-3 sm:px-4 md:px-0 py-4 sm:py-8">
+        <div className="mx-auto max-w-6xl">
+          {activeTab === "dashboard" && <Dashboard transactions={transactions} />}
+          {activeTab === "tracker" && (
+            <ExpenseTracker
+              transactions={transactions}
+              onAddTransaction={addTransaction}
+              onUpdateTransaction={updateTransaction}
+              onDeleteTransaction={deleteTransaction}
+            />
+          )}
+          {activeTab === "reading" && <ReadingTimeTracker />}
+        </div>
       </div>
     </div>
   )
